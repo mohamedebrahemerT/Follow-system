@@ -49,8 +49,95 @@
 
 
 
+
                    
-                      
+                   @if(admin()->user()->role("clients_show"))
+
+                     <li class="nav-item {{  request()->routeIs('clients.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/clients" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> 
+                                  @if(admin()->user()->type == 'AccountManager')
+                            {{trans('trans.myclients')}}
+
+                              @elseif(admin()->user()->type == 'client')
+                            {{trans('trans.myinfo')}}
+
+                            @else
+                            {{trans('trans.clients')}}
+
+                            @endif
+                        </span>
+                        </a>
+                    </li>
+                @endif
+
+                 @if(admin()->user()->role("content_show"))
+
+                     <li class="nav-item {{  request()->routeIs('getcontent.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/getcontent" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> 
+                                   
+                            {{trans('trans.content')}}
+
+                             
+                        </span>
+                        </a>
+                    </li>
+                @endif
+
+                
+ @if(admin()->user()->role("AccountManager_show"))
+
+                     <li class="nav-item {{  request()->routeIs('AccountManager.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/AccountManager" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> {{trans('trans.AccountManager')}}</span>
+                        </a>
+                    </li>
+                @endif
+
+                 @if(admin()->user()->role("GraphicDesign_show"))
+
+                     <li class="nav-item {{  request()->routeIs('GraphicDesign.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/GraphicDesign" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> {{trans('trans.GraphicDesign')}}</span>
+                        </a>
+                    </li>
+                @endif
+
+                 @if(admin()->user()->role("SocialMediaPlatforms_show"))
+                     <li class="nav-item {{  request()->routeIs('SocialMediaPlatforms.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/SocialMediaPlatforms" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> {{trans('trans.SocialMediaPlatforms')}}</span>
+                        </a>
+                    </li>
+                @endif
+
+                    @if(admin()->user()->role("ContentTypes_show"))
+                     <li class="nav-item {{  request()->routeIs('ContentTypes.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/ContentTypes" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> {{trans('trans.ContentTypes')}}</span>
+                        </a>
+                    </li>
+                @endif
+
+                
+                    @if(admin()->user()->role("clientsnots_show"))
+                     <li class="nav-item {{  request()->routeIs('clientsnots.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/clientsnots" class="nav-link ">
+                            <i class="icon-diamond"></i>
+                            <span class="title"> {{trans('trans.clientsnots')}}</span>
+                        </a>
+                    </li>
+                @endif
+
+                
+     
 @if(admin()->user()->role("admins_show"))
 
                      <li class="nav-item {{  request()->routeIs('admins.*') ? 'active' : '' }}">

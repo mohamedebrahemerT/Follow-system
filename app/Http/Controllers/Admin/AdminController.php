@@ -42,7 +42,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins=admin::where('type','!=','superadmin')->get();
+        $admins=admin::
+        where('id','!=','1')->
+        where('type','=','superadmin')
+        ->get();
      return view('admin.admins.index',compact('admins'));
 
     }

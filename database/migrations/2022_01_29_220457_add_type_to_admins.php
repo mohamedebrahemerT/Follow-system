@@ -18,11 +18,10 @@ class AddTypeToAdmins extends Migration
              $table->enum('type', 
                 [
                      'superadmin',
-                      'admin',
-                     'merchant',
-                     'representative',
-                     'shipping_emp',
-                 ])->default('admin');
+                      'client',
+                     'AccountManager',
+                     'GraphicDesign',
+                 ])->default('superadmin');
         });
     }
 

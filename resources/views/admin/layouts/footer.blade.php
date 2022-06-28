@@ -664,7 +664,7 @@
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
         <script src="{{url('/')}}/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
-   <script src="https://www.pilotpenksa.com/Desgin/ckeditor/ckeditor/ckeditor.js"></script>
+   <script src="{{url('/')}}/assets/ckeditor/ckeditor/ckeditor.js"></script>
    <script src="https://cdn.datatables.net/plug-ins/1.11.3/i18n/ar.json"></script>
 
  

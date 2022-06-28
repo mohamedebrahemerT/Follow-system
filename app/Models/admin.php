@@ -18,7 +18,7 @@ class admin extends Authenticatable
 
 
          protected $fillable = [
-        'name', 'email', 'phone', 'image','password','group_id'
+        'name', 'email', 'phone', 'image','password','group_id','type'
 
     ];
      protected $hidden = [
@@ -28,6 +28,24 @@ class admin extends Authenticatable
 
         public function group_id() {
         return $this->hasOne(\App\Models\AdminGroup::class, 'id', 'group_id');
+    }
+
+    public function  AccountsManagers() {
+
+      return $this->hasMany('App\Models\clientsAccountsManager', 'client_id', 'id');
+
+    }
+
+    public function  SocialMediaPlatforms() {
+
+      return $this->hasMany('App\Models\clientsSocialMediaPlatforms', 'client_id', 'id');
+
+    }
+
+     public function  myclientsasacountmanger() {
+
+      return $this->hasMany('App\Models\clientsAccountsManager', 'AccountManager_id', 'id');
+
     }
 
     public function role($name) {
