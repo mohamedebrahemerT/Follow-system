@@ -123,7 +123,8 @@
           </div>
 
               
-
+               @if($content->clientsnot_id)
+       
           @if($content->clientsnots->status == '1')
 
           <div class="form-group col-md-3">
@@ -139,6 +140,7 @@
   name="date"   value="{{$content->date }}" 
    />   
           </div>
+          @endif
           @endif
 
                    <div class="form-group col-md-12">
