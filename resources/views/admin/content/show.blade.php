@@ -55,7 +55,7 @@
                                             {!! $content->content !!}
                                         </div>
                                             @if($content->image)
-                                             <img src="{{url('/')}}/{{$content->image}}"  style="width:200px;height:200px">
+                                             <img src="{{url('/')}}/{{$content->image}}"  style="width:400px;height:400px">
                                               @else
                                           
                                                 @endif

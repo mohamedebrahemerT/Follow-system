@@ -43,6 +43,7 @@
                                          
                                     </div>
                                     <div class="portlet-body">
+                                        @if(admin()->user()->type == 'superadmin')
                                         <div class="table-toolbar">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -55,6 +56,7 @@
                                                 
                                             </div>
                                         </div>
+                                        @endif
                                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
                                             <thead>
                                                 <tr>
@@ -67,8 +69,11 @@
                                                     <th> {{trans('trans.SocialMediaPlatformsname')}}  </th>
                                                     <th>{{trans('trans.logo')}}   </th>
                                                    
+                                        @if(admin()->user()->type == 'superadmin')
                                                    
                                                     <th>{{trans('trans.Actions')}}  </th>
+                                        @endif
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -89,6 +94,7 @@
                                             لا يوجد 
                                                 @endif
                                                     </td>
+                                        @if(admin()->user()->type == 'superadmin')
                                                   
                                                     <td>
                                                         <div class="btn-group">
@@ -112,6 +118,8 @@
                                                             </ul>
                                                         </div>
                                                     </td>
+                                                @endif
+
                                                 </tr>
                                                   @endforeach
                                             </tbody>

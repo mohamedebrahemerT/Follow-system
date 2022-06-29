@@ -168,6 +168,8 @@ class contentController extends Controller
                 'SocialMediaPlatforms_id' => 'required',
                 'ContentType_id' => 'required',
                 'content' => 'required',
+                'date' => 'sometimes|nullable',
+
                  
                  
             ]);

@@ -39,7 +39,21 @@ class SocialMediaPlatformsController extends Controller
      */
     public function index()
     {
-        $SocialMediaPlatforms=SocialMediaPlatforms::get();
+         if(admin()->user()->type == 'superadmin')
+                        {
+      $SocialMediaPlatforms=SocialMediaPlatforms::get();
+
+                        }
+                              if(admin()->user()->type == 'client')
+                        {
+                            $SocialMediaPlatforms=[];
+                     foreach (admin()->user()->SocialMediaPlatforms as $key => $SocialMediaPlatform) 
+                                {
+                         array_push($SocialMediaPlatforms, $SocialMediaPlatform->Platforms);
+                                }  
+                             
+                        }
+        
      return view('admin.SocialMediaPlatforms.index',compact('SocialMediaPlatforms'));
 
     }

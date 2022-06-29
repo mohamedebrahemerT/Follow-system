@@ -19,7 +19,8 @@ class content extends Model
 'content',
 'image',
 'addby_id',
-'clientsnot_id'
+'clientsnot_id',
+'date'
          
     ];
 

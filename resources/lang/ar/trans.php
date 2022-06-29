@@ -280,7 +280,11 @@ return [
         'myinfo'=>'معلوماتي ',
         'Moreexplanation'=>' مزيد من الشرح ',
         'otherPhase'=>'مرحلة عادية ',
-        'LastPhase'=>' اخر مرحلة '
+        'LastPhase'=>' اخر مرحلة ',
+        'mySocialMediaPlatforms'=>'المنصات الخاصة بي',
+        'SocialMediaPlatform'=>'منصة التواصل الاجتماعي ',
+        'clientsnot'=>'ملاحظه العميل',
+        'dateofpublish'=>'تاريخ النشر '
 
         
 ];

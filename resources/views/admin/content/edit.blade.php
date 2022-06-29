@@ -74,14 +74,9 @@
                      <input type="hidden" name="plan_id" value="{{$content->plan_id}}">
                      <input type="hidden" name="client_id" value="{{$content->client_id}}">
 
-                     <div class="form-group col-md-4">
-                               <label class="control-label">{{trans('trans.design')}}</label>
-  <input type="file" placeholder="{{trans('trans.photo')}}" class="form-control"    name="image"  
-   /> 
-               
-          </div>
+                 
                   
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
               <label class="control-label">{{trans('trans.SocialMediaPlatforms_id')}}</label>
     
                 <select name="SocialMediaPlatforms_id" class="form-control select2"  >
@@ -104,7 +99,7 @@
                 </select>
           </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label class="control-label">{{trans('trans.ContentType_id')}}</label>
 
                 <select name="ContentType_id" class="form-control select2"  >
@@ -126,6 +121,25 @@
                     
                 </select>
           </div>
+
+              
+
+          @if($content->clientsnots->status == '1')
+
+          <div class="form-group col-md-3">
+                               <label class="control-label">{{trans('trans.design')}}</label>
+  <input type="file" placeholder="{{trans('trans.photo')}}" class="form-control"    name="image"  
+   /> 
+               
+          </div>
+
+              <div class="form-group col-md-3">
+                <label class="control-label">{{trans('trans.dateofpublish')}}</label>
+  <input type="date" placeholder="{{trans('trans.dateofpublish')}}" class="form-control"    
+  name="date"   value="{{$content->date }}" 
+   />   
+          </div>
+          @endif
 
                    <div class="form-group col-md-12">
               <label class="control-label">{{trans('trans.content')}}</label>

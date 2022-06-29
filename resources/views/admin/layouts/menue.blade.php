@@ -112,7 +112,21 @@
                      <li class="nav-item {{  request()->routeIs('SocialMediaPlatforms.*') ? 'active' : '' }}">
                         <a href="{{url('/')}}/SocialMediaPlatforms" class="nav-link ">
                             <i class="icon-diamond"></i>
-                            <span class="title"> {{trans('trans.SocialMediaPlatforms')}}</span>
+                            <span class="title">
+
+                                @if(admin()->user()->type == 'AccountManager')
+                            {{trans('trans.SocialMediaPlatforms')}}
+
+                              @elseif(admin()->user()->type == 'client')
+                            {{trans('trans.mySocialMediaPlatforms')}}
+
+                            @else
+                            {{trans('trans.SocialMediaPlatforms')}}
+
+                            @endif
+
+                            
+                         </span>
                         </a>
                     </li>
                 @endif

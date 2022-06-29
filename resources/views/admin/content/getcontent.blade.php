@@ -66,7 +66,9 @@
                                     <th> {{trans('trans.design')}}  </th>
                                                     
                                                  
-
+                   
+                 <th> {{trans('trans.clientsnot')}}  </th>
+               
 
 
 
@@ -107,6 +109,11 @@
                                                 @else
                                             لا يوجد 
                                                 @endif
+                                                     </td>
+                                                     <td>
+                 @if($admin->clientsnot_id)
+                  {{$admin->clientsnots->name}} 
+               @endif
                                                      </td>
                                                     
                                         @if(admin()->user()->type !=='client')

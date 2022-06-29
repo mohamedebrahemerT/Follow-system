@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
   use Auth;
 use App\Models\admin;
 use App\Models\Order;
+use App\Models\content;
+use App\Models\clientsnots;
 
 use Hash;
 
@@ -206,9 +208,35 @@ class AdminController extends Controller
 
         public function dashboard()
     {
+
+
+        if (admin()->user()->type == 'superadmin') 
+        {
+           $content=content::get(); 
+        }
+        elseif(admin()->user()->type == 'AccountManager')
+        {
+             
+           $content=content::where('addby_id',admin()->user()->id )->get(); 
+
+        }
+
+        elseif(admin()->user()->type == 'client')
+        {
+             
+            $content=content::where('client_id',admin()->user()->id )->get(); 
+
+        }
+         elseif(admin()->user()->type == 'GraphicDesign')
+        {
+           $clientsnots = clientsnots::where('status','1')->first();
+             
+             $content=content::where('clientsnot_id',$clientsnots->id )->get(); 
+
+        }
                 
 
-             return view('admin.dashboard');
+             return view('admin.dashboard',compact('content'));
        
     }
 
