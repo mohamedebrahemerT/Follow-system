@@ -69,8 +69,11 @@ Route::get('content/create/{clientplan_id}', 'contentController@create');
 Route::get('getcontent', 'contentController@getcontent');
 Route::post('comment', 'contentController@comment');
 
+Route::get('comment_delete/{id}', 'contentController@comment_delete');
 
- 
+
+ Route::resource('Departments', 'DepartmentController');
+Route::get('Departments/{id}/destroy', 'DepartmentController@destroy');
 
 Route::resource('roles', 'rolesController');
 Route::get('roles/{id}/destroy', 'rolesController@destroy');

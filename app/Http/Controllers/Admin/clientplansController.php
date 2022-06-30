@@ -42,8 +42,9 @@ class clientplansController extends Controller
     public function index($client_id)
     {
         $clientplans=clientplans::where('client_id',$client_id)->get();
+        $client=admin::where('id',$client_id)->first();
 
-     return view('admin.clientplans.index',compact('clientplans','client_id'));
+     return view('admin.clientplans.index',compact('clientplans','client_id','client'));
 
     }
 
@@ -201,7 +202,7 @@ class clientplansController extends Controller
          }
                   $clientplans->delete();
               session()->flash('danger', trans('trans.deleteSuccess'));
-        return   redirect('/clientplans/'.$id);
+        return   redirect('/clientplans/'.$clientplans->client_id);
     }
 
         

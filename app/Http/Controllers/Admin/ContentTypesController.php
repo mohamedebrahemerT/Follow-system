@@ -39,7 +39,8 @@ class ContentTypesController extends Controller
      */
     public function index()
     {
-        $ContentTypes=ContentTypes::get();
+        $ContentTypes=ContentTypes::
+             orderBy('id','desc')->get();
      return view('admin.ContentTypes.index',compact('ContentTypes'));
 
     }

@@ -45,27 +45,58 @@ class contentController extends Controller
     {
         if (admin()->user()->type == 'superadmin') 
         {
-           $content=content::get(); 
+           $content=content::orderBy('id','desc')->get(); 
         }
         elseif(admin()->user()->type == 'AccountManager')
         {
              
-           $content=content::where('addby_id',admin()->user()->id )->get(); 
+           $clients_ids=[];
+
+              foreach (admin()->user()->myclientsasacountmanger as $key => $client) 
+                  {
+                       array_push($clients_ids, $client->client->id);
+                   } 
+                 
+           $clientsnots = clientsnots::where('status','1')->first();
+             $content=content::
+             whereIn('client_id',$clients_ids)->
+             orderBy('id','desc')
+             ->get(); 
 
         }
 
         elseif(admin()->user()->type == 'client')
         {
              
-            $content=content::where('client_id',admin()->user()->id )->get(); 
+            $content=content::where('client_id',admin()->user()->id )->
+             orderBy('id','desc')->get(); 
 
         }
          elseif(admin()->user()->type == 'GraphicDesign')
         {
-           $clientsnots = clientsnots::where('status','1')->first();
-             
-             $content=content::where('clientsnot_id',$clientsnots->id )->get(); 
+            $clients_ids=[];
 
+              foreach (admin()->user()->myclientGraphicDesigners as $key => $client) 
+                  {
+                       array_push($clients_ids, $client->client->id);
+                   } 
+                 
+           $clientsnots = clientsnots::where('status','1')->first();
+             $content=content::
+             where('clientsnot_id',$clientsnots->id )
+             ->whereIn('client_id',$clients_ids)
+             ->
+             orderBy('id','desc')
+             ->get(); 
+
+        }
+
+              elseif(admin()->user()->type == 'Emp')
+        {
+               $client_id= admin()->user()->addby;
+             $content=content::where('client_id',$client_id )->
+             orderBy('id','desc')->get(); 
+              
         }
      return view('admin.content.getcontent',compact('content'));
 
@@ -73,8 +104,9 @@ class contentController extends Controller
     public function index($clientplan_id)
     {
          $clientplan=clientplans::where('id',$clientplan_id)->first();
-        $content=content::where('client_id', $clientplan->client_id)->get();
-     return view('admin.content.index',compact('content','clientplan_id'));
+        $content=content::where('client_id', $clientplan->client_id)->
+             orderBy('id','desc')->get();
+     return view('admin.content.index',compact('content','clientplan_id','clientplan'));
 
     }
 
@@ -105,9 +137,11 @@ class contentController extends Controller
 
          $data = $this->validate(\request(),
             [
+                'name' => 'required',
+                'departmet_id' => 'required',
                 'plan_id' => 'required',
                 'client_id' => 'required',
-                'SocialMediaPlatforms_id' => 'required',
+                'SocialMediaPlatforms_id' => 'sometimes|nullable',
                 'ContentType_id' => 'required',
                 'content' => 'required',
                  
@@ -129,9 +163,44 @@ class contentController extends Controller
     public function show($id)
     {
         //
-           $content=content::where('id',$id)->first();
+            $content=content::where('id',$id)->first();
+           
 
-     return view('admin.content.show',compact('content'));
+            if (admin()->user()->type == 'superadmin') 
+        {
+             $comments=$content->comment;
+        }
+        elseif(admin()->user()->type == 'AccountManager')
+        {
+             
+             $comments=$content->AccountManagercomment;
+           
+
+        }
+
+        elseif(admin()->user()->type == 'client')
+        {
+             $comments=$content->comment;
+            
+
+        }
+         elseif(admin()->user()->type == 'GraphicDesign')
+        {
+             $comments=$content->comment;
+            
+
+        }
+
+              elseif(admin()->user()->type == 'Emp')
+        {
+               
+             $comments=$content->comment;
+              
+        }
+
+
+
+     return view('admin.content.show',compact('content','comments'));
     }
 
     /**
@@ -163,9 +232,10 @@ class contentController extends Controller
            // return request();
         $data = $this->validate(\request(),
             [
-                'plan_id' => 'required',
+                'name' => 'required',
+                'departmet_id' => 'required',
                 'client_id' => 'required',
-                'SocialMediaPlatforms_id' => 'required',
+                'SocialMediaPlatforms_id' => 'sometimes|nullable',
                 'ContentType_id' => 'required',
                 'content' => 'required',
                 'date' => 'sometimes|nullable',
@@ -220,15 +290,30 @@ class contentController extends Controller
         public function comment(Request $request)
         {
               
-             
+            // return request();
             $data = $this->validate(\request(),
             [
                 'clientsnot_id' => 'sometimes|nullable',
                 'content_id' => 'required',
+                'name' => 'required',
+                'content' => 'required',
+                'typeofsend' => 'required',
                 'comment' => 'sometimes|nullable',
                  
             ]);
+
+            if ($request->typeofsend == 'ارسل الي مدير الحساب') {
+               $data['typeofsend']='AccountManager';
+            }
+            else
+            {
+               $data['typeofsend']='client';
+
+            }
+            
+
        $data['addby_id']=admin()->user()->id;
+      // return $data;
          
        $content=content::where('id',$request->content_id)->first();
       $content->clientsnot_id=$request->clientsnot_id;
@@ -240,6 +325,15 @@ class contentController extends Controller
 
              return back();
         }
+
+           public function comment_delete($id)
+    {
+        $comment=comment::where('id',$id)->first();
+          
+                  $comment->delete();
+              session()->flash('danger', trans('trans.deleteSuccess'));
+        return   back();
+    }
  
 
 

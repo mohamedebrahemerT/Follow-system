@@ -54,12 +54,13 @@
                                                         </label>
                                                     </th>
                                                 
+                                                       <th> {{trans('trans.title')}}  </th>
                                                        <th> {{trans('trans.content')}}  </th>
                                         @if(admin()->user()->type !=='client')
 
                                                     <th> {{trans('trans.client_id')}}  </th>
                                                     @endif
-                                    <th> {{trans('trans.SocialMediaPlatforms_id')}}  </th>
+                                    <th> {{trans('trans.departmet_id')}}  </th >
                                     <th> {{trans('trans.ContentType_id')}}  </th>
                                     <th> {{trans('trans.plan_id')}}  </th>
                                  
@@ -89,7 +90,12 @@
                                                         </label>
                                                     </td>
       
-                                                 
+                                                  <td> 
+                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
+
+                                                        {!! $admin->name !!} 
+                                                    </a>
+                                                    </td>
                                                     <td> 
                                                <a href="{{url('/')}}/content/{{$admin->id}}"> 
 
@@ -100,7 +106,11 @@
 
                                                     <td> {{$admin->client->name}} </td>
                                                     @endif
-                                                    <td> {{$admin->Platforms->name}} </td>
+                                   <td> 
+                                    @if($admin->departmet_id)
+                                    {{$admin->Department->name}} 
+                                    @endif
+                                </td >
                                                     <td> {{$admin->ContentType->name}} </td>
                                                     <td> {{$admin->plan->name}} </td>
                                                     <td> 

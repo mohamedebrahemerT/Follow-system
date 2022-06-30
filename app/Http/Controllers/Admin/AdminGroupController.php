@@ -34,7 +34,19 @@ class AdminGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-      $AdminGroups=AdminGroup::where('id','!=',1)->get();
+
+        if (admin()->user()->type == 'superadmin') 
+        {
+            $AdminGroups=AdminGroup::orderBy('id','desc')->where('id','!=',1)->get();
+        }
+        else
+        {
+         $AdminGroups=AdminGroup::
+                where('addby',admin()->user()->id)
+                ->orderBy('id','desc')
+                ->get();
+        }
+    
         return view('admin.admingroups.index',compact('AdminGroups'));
     }
 
@@ -45,8 +57,27 @@ class AdminGroupController extends Controller
      */
     public function create() {
 
+           if (admin()->user()->type == 'superadmin') 
+        {
+           $AdminGroups= AdminGroup::get();
+           $path= require app_path('Http/AdminRouteList.php');
+        }
+        else
+        {
+           $AdminGroups= AdminGroup::whereIn('id',[6,7])->get();
 
-        return view('admin.admingroups.create', ['title' => trans('admin.create')]);
+           $path= require app_path('Http/AdminRouteListclient.php');
+          
+        }
+
+
+        return view('admin.admingroups.create', 
+            [
+                'title' => trans('admin.create'),
+                'path'=>$path,
+                'AdminGroups'=>$AdminGroups
+
+            ]);
     }
 
     /**

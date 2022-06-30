@@ -27,6 +27,27 @@
                         </h1>
                         <!-- END PAGE TITLE-->
                         <!-- END PAGE HEADER-->
+
+                          <div class="row">
+                                                @foreach($clients as $admin)
+
+                                          
+                            <div class="col-lg-2 col-md-3 col-sm-2 col-xs-2">
+                                <div class="dashboard-stat2 ">
+                                    
+                                    @if($admin->image)
+                                    <a href="{{url('/')}}/clientplans/{{$admin->id}}">
+                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:100px;height: 100px;">
+                                                @else
+                                            لا يوجد 
+                                                @endif
+                                                </a>
+                                </div>
+                            </div>
+                                               
+                                                  @endforeach
+
+                            </div>
                         @if(admin()->user()->type == 'superadmin')
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -211,7 +232,7 @@
                   <span data-counter="counterup" data-value="1"></span>
                                             </h3>
                                             <small>
-                                                <a href="{{url('/')}}/clients">
+                                                <a href="{{url('/')}}/admins/{{auth()->guard('admin')->user()->id}}/edit">
                                             {{trans('trans.myinfo')}}
                                             </a>
                                         </small>
@@ -266,6 +287,7 @@
                             </div>
                         </div>
                           @elseif(admin()->user()->type == 'AccountManager')
+
 
                            <div class="row">
                             <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
@@ -357,7 +379,9 @@
 
                                                     <th> {{trans('trans.client_id')}}  </th>
                                                     @endif
-                                    <th> {{trans('trans.SocialMediaPlatforms_id')}}  </th>
+
+                                    <th> {{trans('trans.departmet_id')}}  </th >
+
                                     <th> {{trans('trans.ContentType_id')}}  </th>
                                     <th> {{trans('trans.plan_id')}}  </th>
                                  
@@ -388,7 +412,12 @@
 
                                                     <td> {{$admin->client->name}} </td>
                                                     @endif
-                                                    <td> {{$admin->Platforms->name}} </td>
+                                                   
+                                                    <td> 
+                                               @if($admin->departmet_id)
+                                                        {{$admin->Department->name}}
+                                                        @endif
+                                                         </td >
                                                     <td> {{$admin->ContentType->name}} </td>
                                                     <td> {{$admin->plan->name}} </td>
                                                     <td> 

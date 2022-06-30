@@ -21,6 +21,7 @@ class AddTypeToAdmins extends Migration
                       'client',
                      'AccountManager',
                      'GraphicDesign',
+                     'Emp',
                  ])->default('superadmin');
         });
     }

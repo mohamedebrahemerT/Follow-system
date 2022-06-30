@@ -76,16 +76,18 @@
 
           </div>
 
-           @foreach($client->SocialMediaPlatforms  as $SocialMediaPlatform)
-    <div class="row">
+          {{--  @foreach($client->SocialMediaPlatforms  as $SocialMediaPlatform)--}}
+
                  
-                  <div class="form-group col-md-2">
+             {{--  <div class="form-group col-md-2">
                   <label class="control-label">{{trans('trans.SocialMediaPlatform')}}</label>
-              <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"   
+              <input type="hidden" placeholder="{{trans('trans.name')}}" class="form-control"   
                 value="{{$SocialMediaPlatform->Platforms->name}}"  readonly /> 
-          </div>
+          </div>--}}
+
+              <div class="row">
            @foreach(App\Models\ContentTypes::get()  as $ContentType)
-           <input type="hidden" name="SocialMediaPlatforms_id[]" value="{{$SocialMediaPlatform->SocialMediaPlatforms_id}}">
+          {{-- <input type="hidden" name="SocialMediaPlatforms_id[]" value="{{$SocialMediaPlatform->SocialMediaPlatforms_id}}">--}}
            <input type="hidden" name="ContentType_id[]" value="{{$ContentType->id}}">
  <div class="form-group col-md-2">
             <label class="control-label">{{$ContentType->name}}</label>
@@ -96,7 +98,7 @@
  @endforeach
 
           </div>
- @endforeach
+  {{--@endforeach--}}
 <div>
            <div class="form-group col-md-12">
               <label class="control-label">{{trans('trans.content')}}</label>

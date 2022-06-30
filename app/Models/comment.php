@@ -16,6 +16,9 @@ class comment extends Model
  'content_id',
  'addby_id',
 'comment',
+'name',
+'content',
+'typeofsend',
          
     ];
 

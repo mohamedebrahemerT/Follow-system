@@ -39,7 +39,8 @@ class clientsnotsController extends Controller
      */
     public function index()
     {
-        $clientsnots=clientsnots::get();
+        $clientsnots=clientsnots::
+             orderBy('id','desc')->get();
      return view('admin.clientsnots.index',compact('clientsnots'));
 
     }

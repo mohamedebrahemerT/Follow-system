@@ -48,37 +48,44 @@
  
 
 
-                     <div class="form-group">
+                   <div class="row">
+                      <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.name')}}</label>
-              <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  required=""/> 
+              <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  value="{{old('name')}}" required=""/> 
           </div>
 
 
- <div class="form-group">
+ <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.email')}}</label>
-              <input type="email" placeholder="{{trans('trans.email')}}" class="form-control"    name="email"  required=""/> 
+              <input type="email" placeholder="{{trans('trans.email')}}" class="form-control"    name="email" value="{{old('email')}}"  required=""/> 
           </div>
 
 
- <div class="form-group">
+ <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.password')}}</label>
               <input type="password" placeholder="{{trans('trans.password')}}" class="form-control"    name="password"  required=""/> 
           </div>
 
-           <div class="form-group">
+           <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.phone')}}</label>
-              <input type="phone" placeholder="{{trans('trans.phone')}}" class="form-control"    name="phone"  required=""/> 
+              <input type="phone" placeholder="{{trans('trans.phone')}}" class="form-control"    name="phone"  value="{{old('phone')}}"  required=""/> 
           </div>
 
                  
-
+    @if(admin()->user()->type == 'superadmin' or admin()->user()->type == 'client')
+             @if(admin()->user()->id !== 1 )
            
-              <div class="form-group">
+              <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.role')}}</label>
 
                 <select name="group_id" class="form-control">
-                    @foreach(App\Models\AdminGroup::get() as $AdminGroup)
-                    <option value="{{$AdminGroup->id}}">
+                    @foreach($AdminGroups as $AdminGroup)
+                    <option  
+
+ @if (old('group_id') == $AdminGroup->id)
+              selected
+              @endif
+                     value="{{$AdminGroup->id}}">
                       
                                {{$AdminGroup->group_name}} 
                                  
@@ -87,9 +94,15 @@
                     
                 </select>
           </div>
+                @endif
+          @endif
+             <div class="form-group col-md-4">
+                               <label class="control-label">{{trans('trans.photo')}}</label>
+              <input type="file" placeholder="{{trans('trans.photo')}}" class="form-control"    name="image"     /> 
+          </div>
             
-            
-            
+                       
+                   </div>
 
 
                  

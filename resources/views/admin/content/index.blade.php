@@ -15,15 +15,35 @@
                         <!-- END THEME PANEL -->
                         <!-- BEGIN PAGE BAR -->
                         <div class="page-bar">
-                            <ul class="page-breadcrumb">
+                             <ul class="page-breadcrumb">
                                 <li>
                                                  <a href="{{url('/')}}">{{trans('trans.Home')}}</a>
                                     <i class="fa fa-circle"></i>
                                 </li>
-                                <li>
-                                    <a href="{{url('/')}}/content">{{trans('trans.content')}}</a>
+                                 <li>
+                                    <a href="{{url('/')}}/clients">{{trans('trans.clients')}}</a>
                                     <i class="fa fa-circle"></i>
                                 </li>
+
+                                 <li>
+                                  {{$clientplan->client->name}}
+                                    <i class="fa fa-circle"></i>
+                                </li>
+
+                                <li>
+                                    <a href="{{url('/')}}/clientplans/{{$clientplan->client->id}}">{{$clientplan->name}}</a>
+                                    <i class="fa fa-circle"></i>
+                                </li>
+
+                                 
+
+                                <li>
+                                    {{trans('trans.content')}}
+                                    
+                                    <i class="fa fa-circle"></i>
+                                </li>
+
+                                
                                  
                             </ul>
                             
@@ -38,7 +58,10 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
-                                            <span class="caption-subject bold uppercase"> {{trans('trans.content')}}</span>
+                                            <span class="caption-subject bold uppercase"> 
+{{trans('trans.Home')}} - {{trans('trans.clients')}}  - {{$clientplan->client->name}} - {{$clientplan->name}}  -  {{trans('trans.content')}}
+
+                                        </span>
                                         </div>
                                          
                                     </div>
@@ -67,9 +90,10 @@
                                                         </label>
                                                     </th>
                                                 
+                                                       <th> {{trans('trans.title')}}  </th>
                                                        <th> {{trans('trans.content')}}  </th>
                                                     <th> {{trans('trans.client_id')}}  </th>
-                                    <th> {{trans('trans.SocialMediaPlatforms_id')}}  </th>
+                                    <th> {{trans('trans.departmet_id')}}  </th>
                                     <th> {{trans('trans.ContentType_id')}}  </th>
                                     <th> {{trans('trans.plan_id')}}  </th>
                                  
@@ -81,7 +105,7 @@
 
 
   
-                                        @if(admin()->user()->type !=='client')
+                                        @if(admin()->user()->type  =='superadmin'  or admin()->user()->type  =='AccountManager')
                                                    
                                                     <th>{{trans('trans.Actions')}}  </th>
                                                     @endif
@@ -97,7 +121,11 @@
                                                             <span></span>
                                                         </label>
                                                     </td>
-      
+        <td> 
+                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
+                                                        {!! $admin->name !!}
+                                                        </a>
+                                                         </td>
                                                  
                                                     <td> 
                                                <a href="{{url('/')}}/content/{{$admin->id}}"> 
@@ -105,7 +133,11 @@
                                                         </a>
                                                          </td>
                                                     <td> {{$admin->client->name}} </td>
-                                                    <td> {{$admin->Platforms->name}} </td>
+                                                    <td>
+                                                        @if($admin->departmet_id)
+                                                     {{$admin->Department->name}} 
+                                                     @endif
+                                                 </td >
                                                     <td> {{$admin->ContentType->name}} </td>
                                                     <td> {{$admin->plan->name}} </td>
                                                     <td> 
@@ -116,7 +148,8 @@
                                                 @endif
                                                      </td>
                                                     
-                                        @if(admin()->user()->type !=='client')
+                                
+                                        @if(admin()->user()->type  =='superadmin'  or admin()->user()->type  =='AccountManager')
                                                   
                                                     <td>
                                                         <div class="btn-group">

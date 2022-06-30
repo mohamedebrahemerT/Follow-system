@@ -8,7 +8,7 @@
    @push('js')
        
 
-            <script>
+            <!--script>
 
                 // Replace the <textarea id="editor1"> with a CKEditor
 
@@ -20,7 +20,7 @@
 
 });
  
-            </script>
+            </script -->
                       @endpush
 
 
@@ -76,7 +76,7 @@
 
                  
                   
-                    <div class="form-group col-md-3">
+                    <!--div class="form-group col-md-3">
               <label class="control-label">{{trans('trans.SocialMediaPlatforms_id')}}</label>
     
                 <select name="SocialMediaPlatforms_id" class="form-control select2"  >
@@ -89,6 +89,36 @@
                     value="{{$SocialMediaPlatform->SocialMediaPlatforms_id}}">
                       
                                {{$SocialMediaPlatform->Platforms->name}} 
+                               
+                                 
+                    </option>
+
+
+                    @endforeach
+                    
+                </select>
+          </div -->
+
+          <div class="form-group col-md-3">
+                               <label class="control-label">{{trans('trans.title')}}</label>
+              <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  value="{{$content->name }}" required=""/> 
+          </div>
+
+          
+
+           <div class="form-group col-md-3">
+              <label class="control-label">{{trans('trans.departmet_id')}}</label>
+
+                <select name="departmet_id" class="form-control select2"  >
+                     @foreach(App\Models\Department::get() as $departmet)
+                    <option 
+ 
+  @if ($content->departmet_id  == $departmet->id)
+              selected
+              @endif
+                    value="{{$departmet->id}}">
+                      
+                               {{$departmet->name}} 
                                
                                  
                     </option>

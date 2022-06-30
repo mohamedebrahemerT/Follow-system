@@ -12,6 +12,7 @@ return [
 	"SocialMediaPlatforms" => ['create', 'read', 'update', 'delete'],
 	"ContentTypes" => ['create', 'read', 'update', 'delete'],
 	"clientsnots" => ['create', 'read', 'update', 'delete'],
+	"Department" => ['create', 'read', 'update', 'delete'],
 	"content" => ['create', 'read', 'update', 'delete'],
 	"admins" => ['create', 'read', 'update', 'delete'],
 	"AdminGroup" => ['create', 'read', 'update', 'delete'],

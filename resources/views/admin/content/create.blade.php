@@ -8,7 +8,7 @@
     @push('js')
        
 
-            <script>
+            <!--script>
 
                 // Replace the <textarea id="editor1"> with a CKEditor
 
@@ -20,7 +20,7 @@
 
 });
  
-            </script>
+            </script -->
                       @endpush
 
 
@@ -50,7 +50,10 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
-                                            <span class="caption-subject bold uppercase"> {{trans('trans.create')}}</span>
+                                            <span class="caption-subject bold uppercase"> 
+                                               {{$clientplan->client->name}} - {{$clientplan->name}}  -   {{trans('trans.create')}} -{{trans('trans.content')}}
+
+                                            </span>
                                         </div>
                                          
                                     </div>
@@ -65,7 +68,7 @@
                      <input type="hidden" name="plan_id" value="{{$clientplan->id}}">
                      <input type="hidden" name="client_id" value="{{$clientplan->client_id}}">
                   
-                    <div class="form-group col-md-6">
+                    <!--div class="form-group col-md-6">
               <label class="control-label">{{trans('trans.SocialMediaPlatforms_id')}}</label>
     
                 <select name="SocialMediaPlatforms_id" class="form-control select2"  >
@@ -86,9 +89,39 @@
                     @endforeach
                     
                 </select>
+          </div -->
+
+          <div class="form-group col-md-4">
+              <label class="control-label">{{trans('trans.departmet_id')}}</label>
+
+                <select name="departmet_id" class="form-control select2"  >
+                    @foreach(App\Models\Department::get() as $departmet)
+                    <option 
+ 
+  @if (old('departmet_id') == $departmet->id)
+              selected
+              @endif
+                    value="{{$departmet->id}}">
+                      
+                               {{$departmet->name}} 
+                               
+                                 
+                    </option>
+
+
+                    @endforeach
+                    
+                </select>
           </div>
 
-            <div class="form-group col-md-6">
+           <div class="form-group col-md-4">
+                               <label class="control-label">{{trans('trans.title')}}</label>
+              <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  required=""/> 
+          </div>
+
+           
+
+            <div class="form-group col-md-4">
               <label class="control-label">{{trans('trans.ContentType_id')}}</label>
 
                 <select name="ContentType_id" class="form-control select2"  >

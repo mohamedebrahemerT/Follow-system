@@ -50,7 +50,7 @@ return [
     'terms' => 'الشروط والأحكام',
     'privacy' => 'سياسة الاستخدام',
     'reserved' => 'جميع الحقوق محفوظة.',
-    'title'=>'  مركز التجارة الإلكترونية الفلسطيني  ',
+    'title'=>' العنوان ',
     'Sign In'=>'تسجيل الدخول',
     'Enter any username and password.'=>'أدخل أي اسم مستخدم وكلمة مرور.',
     'Username'=>'اسم المستخدم',
@@ -60,7 +60,7 @@ return [
     'Forgot Password?'=>'هل نسيت كلمة السر؟',
     'Create an account'=>'انشئ حساب',
     'invald email or password '=>' البريد الإلكتروني أو كلمة السر خاطئة',
-    'Dashboard'=>'لوحة القيادة',
+    'Dashboard'=>' لوحة التحكم ',
     'Home'=>'الصفحة الرئيسية',
     'statistics'=>'الإحصاء والاحتمالات',
     'My Profile'=>'ملفي',
@@ -238,9 +238,9 @@ return [
     "error_permission_5" => "عُد إلى الصفحة الرئيسية",
     "error_permission_6" => "أو تحقق من إمكانية إتباعك للرابط الصحيح",
    'adminShowCities'=>'المدن',
-   'dashboard'=>'لوحة القيادة ',
+   'dashboard'=>' لوحة التحكم  ',
    'Edit profile'=>'تعديل البروفايل',
-   'dashboardCompanies'=>'لوحة القيادة',
+   'dashboardCompanies'=>' لوحة التحكم ',
 
     'companiesGroup'=>' مجموعات المشرفين ',
      'companiesOrders'=>' الطلبات',
@@ -284,7 +284,25 @@ return [
         'mySocialMediaPlatforms'=>'المنصات الخاصة بي',
         'SocialMediaPlatform'=>'منصة التواصل الاجتماعي ',
         'clientsnot'=>'ملاحظه العميل',
-        'dateofpublish'=>'تاريخ النشر '
+        'dateofpublish'=>'تاريخ النشر ',
+        'plan'=>'الخطة ',
+        'Department'=>'المحاور ',
+    'How Tree'=>'عرض شجرة الاقسام ',
+    'Back'=>'عودة',
+     'plese chiose parent'=>'قم بختيار التصنيف الرئيسي  لو رغيت   والا ترغب سيضاف رئسي ',
+    'photo'=>'الصورة ',
+    'departmet_id'=>'المحور ',
+    'sendtoteam'=>'ارسل الي فريق ',
+    'sendtoacountmanger'=>'ارسل الي مدير الحساب ',
+    'addcomment'=>'اضافة تعليق او تعديل',
+    'toteam'=>'الي فريق ',
+    'typeofsend'=>'نوع الارسال ',
+    'toacountmager'=>'الي مدير الحساب ',
+    'not'=>'الملاحظه   ',
+    'Customer Comments and Amendments Table'=>' جدول   تعديلات وتعليقات   الفريق  ',
+    'addby'=>'اضيف بواسطة ',
+    'AccountManagercomment Comments and Amendments Table'=>'جدول تعديلات وتعليقات مدير الحساب '
+
 
         
 ];

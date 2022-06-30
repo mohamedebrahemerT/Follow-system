@@ -16,11 +16,15 @@ class content extends Model
 'SocialMediaPlatforms_id',
 'ContentType_id',
 'plan_id',
+'name',
 'content',
 'image',
 'addby_id',
 'clientsnot_id',
-'date'
+'date',
+'departmet_id',
+
+  
          
     ];
 
@@ -28,6 +32,9 @@ class content extends Model
         return $this->hasOne(\App\Models\clientsnots::class, 'id', 'clientsnot_id');
     }
 
+ public function Department() {
+        return $this->hasOne(\App\Models\Department::class, 'id', 'departmet_id');
+    }
        public function plan() {
         return $this->hasOne(\App\Models\clientplans::class, 'id', 'plan_id');
     }
@@ -48,6 +55,16 @@ class content extends Model
     }
       public function comment()
     {
-        return $this->hasMany(\App\Models\comment::class,'content_id');
+        return $this->hasMany(\App\Models\comment::class,'content_id')->orderBy('id','desc');
+    }
+
+      public function clientcomment()
+    {
+        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','client')->orderBy('id','desc');
+    }
+
+     public function AccountManagercomment()
+    {
+        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','AccountManager')->orderBy('id','desc');
     }
 }

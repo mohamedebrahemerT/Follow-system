@@ -48,10 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT STYLES -->
 
           <!-- Favicon -->
-    <link rel="icon" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{url('/')}}/landing/images/favicon.png">
+    <link rel="shortcut icon" href="https://hullol.net/forentend/iconified/iconified/favicon.ico" type="image/x-icon" />
        
        
     </head>
@@ -61,7 +58,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="index.html">
-                <img src="{{url('/')}}/landing/images/logo.png" alt=""  style="height: 79px;" /> </a>
+                <img src="{{url('/')}}/{{setting()->logo}}" alt=""  style="height: 79px;" /> </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->

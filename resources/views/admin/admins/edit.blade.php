@@ -34,7 +34,7 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
-                                            <span class="caption-subject bold uppercase"> {{trans('trans.create')}}</span>
+                                            <span class="caption-subject bold uppercase"> {{trans('trans.edit')}}</span>
                                         </div>
                                          
                                     </div>
@@ -48,34 +48,36 @@
                    
                    <input type="hidden" name="id" value="{{$admin->id}}">
  
+          <div class="row">
 
 
-                     <div class="form-group">
+                     <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.name')}}</label>
               <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  required="" value="{{$admin->name}}" /> 
           </div>
 
 
- <div class="form-group">
+ <div class="form-group  col-md-4">
                                <label class="control-label">{{trans('trans.email')}}</label>
               <input type="email" placeholder="{{trans('trans.email')}}" class="form-control"    name="email"  required="" value="{{$admin->email}}"/> 
           </div>
 
 
- <div class="form-group">
+ <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.password')}}</label>
               <input type="password" placeholder="{{trans('trans.password')}}" class="form-control"    name="password"  required="" /> 
           </div>
 
-           <div class="form-group">
+           <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.phone')}}</label>
               <input type="phone" placeholder="{{trans('trans.phone')}}" class="form-control"    name="phone"  required=""  value="{{$admin->phone}}"/> 
           </div>
 
 
 
-           
-                <div class="form-group">
+             @if(admin()->user()->type == 'superadmin')
+             @if($admin->id !== 1 )
+                <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.role')}}</label>
 
                 <select name="group_id" class="form-control">
@@ -89,11 +91,18 @@
                     
                 </select>
           </div>
+          @endif
+          @endif
             
             
-            
+             <div class="form-group col-md-4">
+                               <label class="control-label">{{trans('trans.photo')}}</label>
+              <input type="file" placeholder="{{trans('trans.photo')}}" class="form-control"    name="image"    /> 
+          </div>
             
 
+              
+          </div>
 
                  
 

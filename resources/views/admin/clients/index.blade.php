@@ -20,6 +20,8 @@
                                                  <a href="{{url('/')}}">{{trans('trans.Home')}}</a>
                                     <i class="fa fa-circle"></i>
                                 </li>
+
+                                
                                 <li>
                                     <a href="{{url('/')}}/clients">{{trans('trans.clients')}}</a>
                                     <i class="fa fa-circle"></i>
@@ -84,10 +86,18 @@
                                                             <span></span>
                                                         </label>
                                                     </td>
-                                                    <td> {{$admin->name}} </td>
                                                     <td>
+                      <a href="{{url('/')}}/clientplans/{{$admin->id}}">
+
+                                                     {{$admin->name}}
+                                        </a>
+                                                     
+                                                      </td>
+                                                    <td>
+                      <a href="{{url('/')}}/clientplans/{{$admin->id}}">
                                                           @if($admin->image)
-                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:50px;height: 50px;">
+                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:100px;height: 100px;">
+                                        </a>
                                                 @else
                                             لا يوجد 
                                                 @endif

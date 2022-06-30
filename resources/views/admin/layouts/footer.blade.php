@@ -667,7 +667,8 @@
    <script src="{{url('/')}}/assets/ckeditor/ckeditor/ckeditor.js"></script>
    <script src="https://cdn.datatables.net/plug-ins/1.11.3/i18n/ar.json"></script>
 
- 
+ <script src="{{url('/')}}/assets/jstree/dist/jstree.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
           @stack('js')
     </body>

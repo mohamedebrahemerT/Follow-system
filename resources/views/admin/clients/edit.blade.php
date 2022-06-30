@@ -76,7 +76,7 @@
           </div>
 
 
-           <div class="form-group col-md-6">
+           <div class="form-group col-md-4">
               <label class="control-label">{{trans('trans.AccountManagerrsp')}}</label>
 
                 <select name="AccountManager_id[]" class="form-control select2" multiple>
@@ -100,7 +100,31 @@
                 </select>
           </div>
 
-           <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
+              <label class="control-label">{{trans('trans.GraphicDesign')}}</label>
+
+                <select name="GraphicDesign_id[]" class="form-control select2" multiple>
+                   @foreach(App\Models\admin::where('type','GraphicDesign')->get() as $admin)
+                   
+                    <option   
+
+                      @foreach($client->GraphicDesigners  as $GraphicDesigner )    
+                 @if($GraphicDesigner->GraphicDesign_id == $admin->id)
+                 selected
+                 @endif
+                    @endforeach
+                    value="{{$admin->id}}">
+                      
+                               {{$admin->name}}        
+                    </option>
+
+
+                    @endforeach
+                    
+                </select>
+          </div>
+
+           <div class="form-group col-md-4">
               <label class="control-label">{{trans('trans.SocialMediaPlatforms')}}</label>
 
                 <select name="SocialMediaPlatforms_id[]" class="form-control select2" multiple>

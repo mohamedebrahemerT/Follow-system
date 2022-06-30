@@ -10,6 +10,7 @@ use App\Models\admin;
 use App\Models\Order;
 use App\Models\content;
 use App\Models\clientsnots;
+use App\Models\AdminGroup;
 
 use Hash;
 
@@ -44,10 +45,22 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins=admin::
+        if (admin()->user()->type == 'superadmin') 
+        {
+           $admins=admin::
         where('id','!=','1')->
-        where('type','=','superadmin')
+        where('type','=','superadmin')->
+        where('addby',admin()->user()->id)
+        ->orderBy('id','desc') 
         ->get();
+        }
+        else
+        {
+         $admins=admin::
+                where('addby',admin()->user()->id)
+                  ->orderBy('id','desc') 
+                ->get();
+        }
      return view('admin.admins.index',compact('admins'));
 
     }
@@ -60,7 +73,19 @@ class AdminController extends Controller
     public function create()
     {
         //
-     return view('admin.admins.create');
+         if (admin()->user()->type == 'superadmin') 
+        {
+           $AdminGroups= AdminGroup::get();
+          
+        }
+        else
+        {
+           $AdminGroups= AdminGroup::whereIn('id',[6,7])->get();
+
+          
+          
+        }
+     return view('admin.admins.create',compact('AdminGroups'));
 
     }
 
@@ -74,7 +99,7 @@ class AdminController extends Controller
     {
         //
 
-      ///  return request();
+      //  return request();
 
          $data = $this->validate(\request(),
             [
@@ -87,7 +112,21 @@ class AdminController extends Controller
                  
             ]);
 
-                       $data['password']=Hash::make($request->password);
+    $data['password']=Hash::make($request->password);
+    $data['addby']=admin()->user()->id;
+
+       if (admin()->user()->type !== 'superadmin') {
+    $data['type']='Emp';
+           
+       }
+
+           if ($request->image) 
+               {
+
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('/images/users'), $imageName);
+             $data['image'] = 'images/users/'.$imageName;
+               } 
 
         $admin=admin::create($data);
 
@@ -138,15 +177,35 @@ class AdminController extends Controller
                 'email' => 'required',
                 'password' => 'required',
                 'phone' => 'required',
-                'group_id' => 'required',
+                'group_id' => 'sometimes|nullable',
                 
                  
             ]);
 
                         $data['password']=Hash::make($request->password);
+        $admin=admin::where('id',$request->id)->first( );
+
+                         if ($request->image) 
+               {
+
+
+                if ($admin->image) 
+         {
+            if (file_exists($admin->image)) 
+            {
+                   unlink($admin->image);
+            }    
+                     
+         }
+
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('/images/users'), $imageName);
+            $data['image'] = 'images/users/'.$imageName;
+              }
      
         $admin=admin::where('id',$request->id)->update($data);
 
+         
         session()->flash('success', trans('trans.updatSuccess'));
         return   back();
     }
@@ -212,31 +271,78 @@ class AdminController extends Controller
 
         if (admin()->user()->type == 'superadmin') 
         {
-           $content=content::get(); 
+           $content=content::orderBy('id','desc')->get(); 
+               $clients=admin::where('type','client')->orderBy('id','desc')->get();
         }
         elseif(admin()->user()->type == 'AccountManager')
         {
              
-           $content=content::where('addby_id',admin()->user()->id )->get(); 
+           $clients_ids=[];
+
+              foreach (admin()->user()->myclientsasacountmanger as $key => $client) 
+                  {
+                       array_push($clients_ids, $client->client->id);
+                   } 
+                 
+           $clientsnots = clientsnots::where('status','1')->first();
+              $content=content::
+             whereIn('client_id',$clients_ids)
+             ->orderBy('id','desc')
+             ->get(); 
+
+              $clients=[];
+
+              foreach (admin()->user()->myclientsasacountmanger as $key => $client) 
+                  {
+                       array_push($clients, $client->client);
+                   }  
+
+
 
         }
 
         elseif(admin()->user()->type == 'client')
         {
              
-            $content=content::where('client_id',admin()->user()->id )->get(); 
+            $content=content::where('client_id',admin()->user()->id )->orderBy('id','desc')->get(); 
+               $clients=admin::where('id',admin()->user()->id)->orderBy('id','desc')->get();
 
         }
          elseif(admin()->user()->type == 'GraphicDesign')
         {
+            $clients_ids=[];
+
+              foreach (admin()->user()->myclientGraphicDesigners as $key => $client) 
+                  {
+                       array_push($clients_ids, $client->client->id);
+                   } 
+                 
            $clientsnots = clientsnots::where('status','1')->first();
-             
-             $content=content::where('clientsnot_id',$clientsnots->id )->get(); 
+             $content=content::
+             where('clientsnot_id',$clientsnots->id )
+             ->whereIn('client_id',$clients_ids)
+             ->orderBy('id','desc')
+             ->get(); 
+
+               $clients=[];
+
+              foreach (admin()->user()->myclientGraphicDesigners as $key => $client) 
+                  {
+                       array_push($clients, $client->client);
+                   } 
 
         }
+           elseif(admin()->user()->type == 'Emp')
+        {
+               $client_id= admin()->user()->addby;
+             $content=content::where('client_id',$client_id )->orderBy('id','desc')->get(); 
+              $clients=admin::where('id',$client_id)->orderBy('id','desc')->get();
+        }
+        
+ 
                 
 
-             return view('admin.dashboard',compact('content'));
+             return view('admin.dashboard',compact('content','clients'));
        
     }
 

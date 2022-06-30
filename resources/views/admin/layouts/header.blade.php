@@ -48,11 +48,7 @@
     <!-- END THEME LAYOUT STYLES -->
 
     <!-- Favicon -->
-    <link rel="icon" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{url('/')}}/landing/images/favicon.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{url('/')}}/landing/images/favicon.png">
-    <!-- END HEAD -->
+   <link rel="shortcut icon" href="https://hullol.net/forentend/iconified/iconified/favicon.ico" type="image/x-icon" />
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="{{url('/')}}/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css"
@@ -64,6 +60,8 @@
     <link href="{{url('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet"
           type="text/css"/>
+
+           <link rel="stylesheet" href="{{url('/')}}/assets/jstree/dist/themes/default/style.min.css">
     <!-- END PAGE LEVEL PLUGINS -->
     @stack('style')
 
@@ -170,6 +168,10 @@
         .page-sidebar .page-sidebar-menu.page-sidebar-menu-light>li .sub-menu, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light>li .sub-menu {
             background-color: #252B28;
         }
+
+        .page-sidebar .page-sidebar-menu > li > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a {
+  color: #FFF;
+}
     </style>
 
 

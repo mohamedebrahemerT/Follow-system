@@ -46,8 +46,10 @@
             </tr>
           </thead>
           <tbody>
+
+
             
-            @foreach(require app_path('Http/AdminRouteList.php') as $key=> $value)
+            @foreach($path as $key=> $value)
             <tr>
               <td>{{ !is_array($value)?trans('trans.'.$value):trans('trans.'.$key) }}</td>
               <td>
@@ -120,7 +122,7 @@
               </td>
             </tr>
             @endforeach
-
+       @if(admin()->user()->type == 'superadmin')
             <tr>
               <td>{{trans('trans.settings')}}</td>
               <td>
@@ -158,6 +160,7 @@
               <td>
               </td>
             </tr>
+            @endif
           </tbody>
         </table>
       </div>

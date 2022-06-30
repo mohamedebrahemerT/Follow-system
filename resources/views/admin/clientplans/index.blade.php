@@ -20,8 +20,18 @@
                                                  <a href="{{url('/')}}">{{trans('trans.Home')}}</a>
                                     <i class="fa fa-circle"></i>
                                 </li>
+                                 <li>
+                                    <a href="{{url('/')}}/clients">{{trans('trans.clients')}}</a>
+                                    <i class="fa fa-circle"></i>
+                                </li>
+
                                 <li>
-                                    <a href="{{url('/')}}/clientplans">{{trans('trans.clientplans')}}</a>
+                                    <a href="{{url('/')}}/clientplans/{{$client_id}}">{{trans('trans.clientplans')}}</a>
+                                    <i class="fa fa-circle"></i>
+                                </li>
+
+                                  <li>
+                                   {{$client->name}} 
                                     <i class="fa fa-circle"></i>
                                 </li>
                                  
@@ -38,12 +48,13 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
-                                            <span class="caption-subject bold uppercase"> {{trans('trans.clientplans')}}</span>
+                                            <span class="caption-subject bold uppercase"> 
+         {{trans('trans.Home')}} - {{trans('trans.clients')}} - {{trans('trans.clientplans')}} -  {{$client->name}} </span>
                                         </div>
                                          
                                     </div>
                                     <div class="portlet-body">
-                                        @if(admin()->user()->type !=='client')
+                 @if(admin()->user()->type =='superadmin' or admin()->user()->type =='AccountManager')
                                         <div class="table-toolbar">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -67,6 +78,9 @@
                                                         </label>
                                                     </th>
                                                     <th> {{trans('trans.name')}}  </th>
+                                                    <td>
+                                                      {{trans('trans.content')}}  
+                                                    </td>
                                                     <th> {{trans('trans.date')}}  </th>
                                                  
                                                    
@@ -84,7 +98,15 @@
                                                             <span></span>
                                                         </label>
                                                     </td>
-                                                    <td> {{$clientplan->name}} </td>
+                                                    <td>
+                                                         <a href="{{url('/')}}/clientplans/show/{{$clientplan->id}}">
+                                                     {{$clientplan->name}} 
+                                                 </a>
+                                                 </td>
+                                                 <td>
+                                                         <a href="{{url('/')}}/content/index/{{$clientplan->id}}">
+                                     <i class="icon-docs"></i>{{trans('trans.content')}} </a>
+                                                 </td>
                                                     <td> {{$clientplan->date}} </td>
                                                     
                                                   
@@ -105,8 +127,9 @@
                               <a href="{{url('/')}}/clientplans/show/{{$clientplan->id}}">
                                      <i class="icon-docs"></i>{{trans('trans.show')}} </a>
                                                                 </li>
-                                        @if(admin()->user()->type !=='client')
+                     @if(admin()->user()->type  =='superadmin' or admin()->user()->type  =='AccountManager' )
 
+                                   
                                                                 <li>
                                                  <a href="{{url('/')}}/clientplans/{{$clientplan->id}}/edit">
                                      <i class="icon-docs"></i>{{trans('trans.edit')}} </a>

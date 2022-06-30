@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\admin;
 use App\Models\clientsAccountsManager;
+use App\Models\clientsGraphicDesigner;
+
 use App\Models\clientsSocialMediaPlatforms;
 use Hash;
 
@@ -41,7 +43,7 @@ class clientsController extends Controller
     {
           if(admin()->user()->type == 'superadmin')
                         {
-        $clients=admin::where('type','client')->get();
+        $clients=admin::where('type','client')->orderBy('id','desc')->get();
 
                         }
                         elseif (admin()->user()->type == 'AccountManager') 
@@ -55,16 +57,28 @@ class clientsController extends Controller
                         }
                         elseif (admin()->user()->type == 'client') 
                         {
-        $clients=admin::where('id',admin()->user()->id)->get();
+        $clients=admin::where('id',admin()->user()->id)->orderBy('id','desc')->get();
 
                         }
 
                           elseif (admin()->user()->type == 'GraphicDesign') 
                         {
-              $clients=admin::where('type','client')->get();
+             
+                             $clients=[];
+
+              foreach (admin()->user()->myclientGraphicDesigners as $key => $client) 
+                  {
+                       array_push($clients, $client->client);
+                   }  
 
 
                         }
+
+                         elseif(admin()->user()->type == 'Emp')
+        {
+               $client_id= admin()->user()->addby;
+              $clients=admin::where('id',$client_id)->orderBy('id','desc')->get();
+        }
 
                             
      return view('admin.clients.index',compact('clients'));
@@ -91,7 +105,7 @@ class clientsController extends Controller
      */
     public function store(Request $request)
     {
-
+     //return request();
          $data = $this->validate(\request(),
             [
                 'name' => 'required',
@@ -118,6 +132,15 @@ class clientsController extends Controller
                 clientsAccountsManager::create([
         'client_id'=> $clients->id,
         'AccountManager_id'=>$AccountManager_id,
+     ]);
+             }
+         }
+
+          if ($request->GraphicDesign_id) {
+             foreach ($request->GraphicDesign_id as $key => $GraphicDesign_id) {
+                clientsGraphicDesigner::create([
+        'client_id'=> $clients->id,
+        'GraphicDesign_id'=>$GraphicDesign_id,
      ]);
              }
          }
@@ -224,6 +247,17 @@ class clientsController extends Controller
                 clientsAccountsManager::create([
         'client_id'=> $clients->id,
         'AccountManager_id'=>$AccountManager_id,
+     ]);
+             }
+         }
+
+          if ($request->GraphicDesign_id) {
+             $clientsGraphicDesigner=  clientsGraphicDesigner::where('client_id',$clients->id);
+    $clientsGraphicDesigner->delete();
+             foreach ($request->GraphicDesign_id as $key => $GraphicDesign_id) {
+                clientsGraphicDesigner::create([
+        'client_id'=> $clients->id,
+        'GraphicDesign_id'=>$GraphicDesign_id,
      ]);
              }
          }

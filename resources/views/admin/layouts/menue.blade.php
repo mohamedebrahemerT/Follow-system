@@ -72,6 +72,15 @@
                     </li>
                 @endif
 
+                   @if(admin()->user()->role("Department_show"))
+                    <li class="nav-item {{  request()->routeIs('Departments.*') ? 'active' : '' }}">
+                        <a href="{{url('/')}}/Departments" class="nav-link ">
+                           <i class="icon-wallet"></i>
+                            <span class="title"> {{trans('trans.Department')}}</span>
+                        </a>
+                    </li>
+                     @endif
+
                  @if(admin()->user()->role("content_show"))
 
                      <li class="nav-item {{  request()->routeIs('getcontent.*') ? 'active' : '' }}">
