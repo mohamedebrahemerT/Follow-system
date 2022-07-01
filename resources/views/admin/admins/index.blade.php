@@ -67,6 +67,7 @@
                                                     <th> {{trans('trans.name')}}  </th>
                                                     <th>{{trans('trans.email')}}   </th>
                                                     <th> {{trans('trans.phone')}} </th>
+                                                    <th> {{trans('trans.role')}} </th>
                                                     <th> {{trans('trans.Joined')}} </th>
                                                     <th>{{trans('trans.Actions')}}  </th>
                                                 </tr>
@@ -87,6 +88,9 @@
                                                     </td>
                                                     <td>
                                                         <span class="label label-sm label-success"> {{$admin->phone}} </span>
+                                                    </td>
+                                                     <td>
+                                                        <span class="label label-sm label-success"> {{$admin->group->group_name}} </span>
                                                     </td>
                                                     <td class="center">
                                                       

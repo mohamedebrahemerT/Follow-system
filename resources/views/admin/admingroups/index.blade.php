@@ -92,10 +92,10 @@
                                      <i class="icon-docs"></i>{{trans('trans.edit')}} </a>
                                                                 </li>
 
-                                                                 <li>
+                                                                 <!--li>
              <a href="{{url('/')}}/AdminGroup/{{$AdminGroup->id}}/destroy ">
                                      <i class="icon-docs"></i>{{trans('trans.delete')}} </a>
-                                                                </li>
+                                                                </li-->
                                                                 
                                                                 
                                                                

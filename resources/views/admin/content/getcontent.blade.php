@@ -104,21 +104,40 @@
                                                     </td>
                                         @if(admin()->user()->type !=='client')
 
-                                                    <td> {{$admin->client->name}} </td>
+                                                    <td> 
+                                    @if($admin->client_id)
+
+                                                        {{$admin->client->name}} 
+                                    @endif
+
+                                                    </td>
                                                     @endif
                                    <td> 
                                     @if($admin->departmet_id)
                                     {{$admin->Department->name}} 
                                     @endif
                                 </td >
-                                                    <td> {{$admin->ContentType->name}} </td>
-                                                    <td> {{$admin->plan->name}} </td>
+                                                    <td>
+                                                        @if($admin->ContentType_id)
+                                                     {{$admin->ContentType->name}} 
+                                                     @endif
+                                                 </td>
+                                                    <td> 
+                                                        @if($admin->plan_id)
+                                                        {{$admin->plan->name}} 
+                                                        @endif
+                                                    </td>
                                                     <td> 
  @if($admin->image)
-                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:50px;height: 50px;">
-                                                @else
-                                            لا يوجد 
-                                                @endif
+ <img src="@if(file_exists($admin->image))
+ {{url('/')}}/{{$admin->image}}
+ @else
+ {{url('/')}}/images/default.jpg
+@endif
+  " style="width:50px;height: 50px;">
+     @else
+  لا يوجد 
+    @endif
                                                      </td>
                                                      <td>
                  @if($admin->clientsnot_id)

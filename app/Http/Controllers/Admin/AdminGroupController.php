@@ -59,7 +59,7 @@ class AdminGroupController extends Controller
 
            if (admin()->user()->type == 'superadmin') 
         {
-           $AdminGroups= AdminGroup::get();
+            $AdminGroups= AdminGroup::whereNotIn('id',[1,2,3,4,5,6,7,8])->get();
            $path= require app_path('Http/AdminRouteList.php');
         }
         else
@@ -137,9 +137,16 @@ class AdminGroupController extends Controller
      */
     public function show($id) {
         $admingroups = AdminGroup::find($id);
-        return is_null($admingroups) || empty($admingroups) ?
-        backWithError(trans("admin.undefinedRecord")) :
-        view('admin.admingroups.show', [
+
+         if ( !$admingroups) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/AdminGroup');
+           }
+      
+
+        return     view('admin.admingroups.show', [
             'title' => trans('admin.show'),
             'admingroups' => $admingroups,
         ]);
@@ -152,12 +159,19 @@ class AdminGroupController extends Controller
      */
     public function edit($id) {
          $admingroups = AdminGroup::find($id);
-        return is_null($admingroups) || empty($admingroups) ?
-        backWithError(trans("trans.undefinedRecord")) :
-        view('admin.admingroups.edit', [
+
+           if ( !$admingroups) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/AdminGroup');
+           }
+
+       return view('admin.admingroups.edit', [
             'title' => trans('trans.edit'),
             'admingroups' => $admingroups,
         ]);
+
     }
 
     /**

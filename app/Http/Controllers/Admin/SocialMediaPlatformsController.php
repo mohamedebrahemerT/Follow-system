@@ -125,6 +125,14 @@ class SocialMediaPlatformsController extends Controller
         //
        $SocialMediaPlatforms=SocialMediaPlatforms::where('id',$id)->first();
 
+     
+       if ( !$SocialMediaPlatforms) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/SocialMediaPlatforms');
+           }
+
      return view('admin.SocialMediaPlatforms.edit',compact('SocialMediaPlatforms'));
 
     }

@@ -112,6 +112,13 @@ class ContentTypesController extends Controller
         //
        $ContentTypes=ContentTypes::where('id',$id)->first();
 
+       if ( !$ContentTypes) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/ContentTypes');
+           }
+
      return view('admin.ContentTypes.edit',compact('ContentTypes'));
 
     }

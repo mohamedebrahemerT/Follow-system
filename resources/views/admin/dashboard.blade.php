@@ -88,7 +88,11 @@
                                             <h3 class="font-red-haze">
                                                 <span data-counter="counterup" data-value="{{App\Models\admin::where('type','AccountManager')->count()}}">{{App\Models\admin::where('type','AccountManager')->count()}}</span>
                                             </h3>
-                                            <small> {{trans('trans.AccountManager')}}</small>
+                                            <small>
+                                                <a href="{{url('/')}}/AccountManager">
+                                            {{trans('trans.AccountManager')}}
+                                        </a>
+                                        </small>
                                         </div>
                                         <div class="icon">
                                             <i class="icon-like"></i>
@@ -114,7 +118,11 @@
                                             <h3 class="font-blue-sharp">
                   <span data-counter="counterup" data-value="{{App\Models\admin::where('type','GraphicDesign')->count()}}"></span>
                                             </h3>
-                                            <small>{{trans('trans.GraphicDesign')}}</small>
+                                            <small>
+                                                <a href="{{url('/')}}/GraphicDesign">
+                                            {{trans('trans.GraphicDesign')}}
+                                        </a>
+                                        </small>
                                         </div>
                                         <div class="icon">
                                             <i class="icon-basket"></i>
@@ -140,7 +148,135 @@
                                             <h3 class="font-purple-soft">
                                                 <span data-counter="counterup" data-value="{{App\Models\SocialMediaPlatforms::count()}}"></span>
                                             </h3>
-                                            <small>{{trans('trans.SocialMediaPlatforms')}}</small>
+                                            <small>
+                                                <a href="{{url('/')}}/SocialMediaPlatforms">
+                                            {{trans('trans.SocialMediaPlatforms')}}
+                                        </a>
+                                        </small>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress-info">
+                                        <div class="progress">
+                                            <span style="width: 57%;" class="progress-bar progress-bar-success purple-soft">
+                                                <span class="sr-only"> </span>
+                                            </span>
+                                        </div>
+                                        <div class="status">
+                                            <div class="status-title">   </div>
+                                            <div class="status-number">  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="dashboard-stat2 ">
+                                    <div class="display">
+                                        <div class="number">
+                                            <h3 class="font-purple-soft">
+                                                <span data-counter="counterup" data-value="{{App\Models\Department::count()}}"></span>
+                                            </h3>
+                                            <small>
+                                                <a href="{{url('/')}}/Departments">
+                                            {{trans('trans.Department')}}
+                                        </a>
+                                        </small>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress-info">
+                                        <div class="progress">
+                                            <span style="width: 57%;" class="progress-bar progress-bar-success purple-soft">
+                                                <span class="sr-only"> </span>
+                                            </span>
+                                        </div>
+                                        <div class="status">
+                                            <div class="status-title">   </div>
+                                            <div class="status-number">  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="dashboard-stat2 ">
+                                    <div class="display">
+                                        <div class="number">
+                                            <h3 class="font-purple-soft">
+                                                <span data-counter="counterup" data-value="{{App\Models\content::count()}}"></span>
+                                            </h3>
+                                            <small>
+                                                <a href="{{url('/')}}/getcontent">
+                                            {{trans('trans.content')}}
+                                        </a>
+                                        </small>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress-info">
+                                        <div class="progress">
+                                            <span style="width: 57%;" class="progress-bar progress-bar-success purple-soft">
+                                                <span class="sr-only"> </span>
+                                            </span>
+                                        </div>
+                                        <div class="status">
+                                            <div class="status-title">   </div>
+                                            <div class="status-number">  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="dashboard-stat2 ">
+                                    <div class="display">
+                                        <div class="number">
+                                            <h3 class="font-purple-soft">
+                                                <span data-counter="counterup" data-value="{{App\Models\ContentTypes::count()}}"></span>
+                                            </h3>
+                                            <small>
+                                                <a href="{{url('/')}}/ContentTypes">
+                                            {{trans('trans.ContentTypes')}}
+                                        </a>
+                                        </small>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress-info">
+                                        <div class="progress">
+                                            <span style="width: 57%;" class="progress-bar progress-bar-success purple-soft">
+                                                <span class="sr-only"> </span>
+                                            </span>
+                                        </div>
+                                        <div class="status">
+                                            <div class="status-title">   </div>
+                                            <div class="status-number">  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="dashboard-stat2 ">
+                                    <div class="display">
+                                        <div class="number">
+                                            <h3 class="font-purple-soft">
+                                                <span data-counter="counterup" data-value="{{App\Models\clientsnots::count()}}"></span>
+                                            </h3>
+                                            <small>
+                                                <a href="{{url('/')}}/clientsnots">
+                                            {{trans('trans.clientsnots')}}
+                                        </a>
+                                        </small>
                                         </div>
                                         <div class="icon">
                                             <i class="icon-user"></i>

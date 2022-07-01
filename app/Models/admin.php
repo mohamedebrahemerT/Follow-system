@@ -31,6 +31,10 @@ class admin extends Authenticatable
         return $this->hasOne(\App\Models\AdminGroup::class, 'id', 'group_id');
     }
 
+    public function group() {
+        return $this->hasOne(\App\Models\AdminGroup::class, 'id', 'group_id');
+    }
+
     public function  AccountsManagers() {
 
       return $this->hasMany('App\Models\clientsAccountsManager', 'client_id', 'id');

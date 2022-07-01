@@ -107,6 +107,12 @@ class GraphicDesignController extends Controller
     {
         //
        $client=admin::where('id',$id)->first();
+       if ( !$client) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/GraphicDesign');
+           }
 
      return view('admin.GraphicDesign.edit',compact('client'));
 

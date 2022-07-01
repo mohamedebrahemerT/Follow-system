@@ -108,6 +108,13 @@ class AccountManagerController extends Controller
         //
        $client=admin::where('id',$id)->first();
 
+        if ( !$client) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/AccountManager');
+           }
+
      return view('admin.AccountManager.edit',compact('client'));
 
     }

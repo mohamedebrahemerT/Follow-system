@@ -23,6 +23,10 @@ class content extends Model
 'clientsnot_id',
 'date',
 'departmet_id',
+'ContentMangerConfirm',
+'Contentclientconfirm',
+'acountmangerDesignConfirm',
+'clientDesignConfirm',
 
   
          

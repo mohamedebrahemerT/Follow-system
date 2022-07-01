@@ -34,7 +34,7 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
-                                            <span class="caption-subject bold uppercase"> {{trans('trans.create')}}</span>
+                                            <span class="caption-subject bold uppercase"> {{trans('trans.edit')}}</span>
                                         </div>
                                          
                                     </div>

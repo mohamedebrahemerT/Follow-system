@@ -49,7 +49,7 @@
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
                                             <span class="caption-subject bold uppercase"> 
-         {{trans('trans.Home')}} - {{trans('trans.clients')}} - {{trans('trans.clientplans')}} -  {{$client->name}} </span>
+         {{trans('trans.Home')}} / {{trans('trans.clients')}}  / {{trans('trans.clientplans')}} / {{$client->name}} </span>
                                         </div>
                                          
                                     </div>
@@ -59,8 +59,8 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="btn-group">
-                                                        <a href="{{url('/')}}/clientplans/create/{{$client_id}}" id="sample_editable_1_new" class="btn sbold green"> {{trans('trans.Add New')}}
-                                                            <i class="fa fa-plus"></i>
+                                                        <a href="{{url('/')}}/clientplans/create/{{$client_id}}" id="sample_editable_1_new" class="btn sbold green">   <i class="fa fa-plus"></i>{{trans('trans.Add New plan')}}  
+                                                          
                                                         </a>
                                                     </div>
                                                 </div>

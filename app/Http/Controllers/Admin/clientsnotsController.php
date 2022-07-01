@@ -107,6 +107,13 @@ class clientsnotsController extends Controller
         //
        $clientsnots=clientsnots::where('id',$id)->first();
 
+        if ( !$clientsnots) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/clientsnots');
+           }
+
      return view('admin.clientsnots.edit',compact('clientsnots'));
 
     }

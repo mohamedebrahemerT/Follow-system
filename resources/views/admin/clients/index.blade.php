@@ -51,8 +51,8 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="btn-group">
-                                                        <a href="{{url('/')}}/clients/create" id="sample_editable_1_new" class="btn sbold green"> {{trans('trans.Add New')}}
-                                                            <i class="fa fa-plus"></i>
+                                                        <a href="{{url('/')}}/clients/create" id="sample_editable_1_new" class="btn sbold green"> <i class="fa fa-plus"></i> {{trans('trans.Add New client')}}
+                                                           
                                                         </a>
                                                     </div>
                                                 </div>

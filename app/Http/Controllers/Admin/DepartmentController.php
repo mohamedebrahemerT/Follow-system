@@ -134,6 +134,14 @@ class DepartmentController extends Controller
     {
         //
            $Department=Department::where('id',$id)->first();
+
+           
+         if ( !$Department) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/Departments');
+           }
             
 
      return view('admin.Department.edit',compact('Department'));

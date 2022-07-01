@@ -40,8 +40,12 @@
                             <div class="caption">
                              
  
-   <h4>   <i class="fa fa-cogs"></i> {{trans('trans.content')}}:
+   <h4>   <i class="fa fa-cogs"></i> 
+ {{$content->client->name}}  / {{$content->plan->name}}  / {!! $content->name !!}
+
+   
    @if($content->clientsnot_id)
+    /
                   <h3>{{$content->clientsnots->name}}</h3>
                @endif
 </h4>
@@ -199,7 +203,11 @@
                                           
                                                 @endif
                                     </div>
+  @if($content->ContentMangerConfirm == '1')
  <button onclick="myFunction()" id="off">{{trans('trans.addcomment')}}</button>
+                                                @endif
+
+
 @if(admin()->user()->type !== 'GraphicDesign')
  <form role="form" action="{{url('/')}}/comment" method="POST" enctype="multipart/form-data" style="display: none;"   id="on">
                     @csrf

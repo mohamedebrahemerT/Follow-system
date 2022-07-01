@@ -76,7 +76,7 @@
 
                  
                   
-                    <!--div class="form-group col-md-3">
+                  {{--  <!--div class="form-group col-md-3">
               <label class="control-label">{{trans('trans.SocialMediaPlatforms_id')}}</label>
     
                 <select name="SocialMediaPlatforms_id" class="form-control select2"  >
@@ -98,6 +98,7 @@
                     
                 </select>
           </div -->
+          --}}
 
           <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.title')}}</label>
@@ -192,11 +193,16 @@
                               
         
 
-               @if($content->image)
-                                             <img src="{{url('/')}}/{{$content->image}}"  style="width:200px;height:200px">
-                                              @else
-                                          
-                                                @endif
+                @if($content->image)
+ <img src="@if(file_exists($content->image))
+ {{url('/')}}/{{$content->image}}
+ @else
+ {{url('/')}}/images/default.jpg
+@endif
+  " style="width:100px;height: 100px;">
+     @else
+  لا يوجد 
+    @endif
  
            
                                                                 

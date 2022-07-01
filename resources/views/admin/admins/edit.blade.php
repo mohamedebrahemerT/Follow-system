@@ -81,7 +81,7 @@
                                <label class="control-label">{{trans('trans.role')}}</label>
 
                 <select name="group_id" class="form-control">
-                    @foreach(App\Models\AdminGroup::get() as $AdminGroup)
+                    @foreach($AdminGroups as $AdminGroup)
                     <option value="{{$AdminGroup->id}}"   @if($AdminGroup->id == $admin->group_id) selected="" @endif >
                       
                                {{$AdminGroup->group_name}} 

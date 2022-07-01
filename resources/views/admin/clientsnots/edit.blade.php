@@ -49,21 +49,22 @@
                    <input type="hidden" name="id" value="{{$clientsnots->id}}">
  
 
+       <div class="row">
 
-            <div class="row">
+        
                          <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.name')}}</label>
               <input type="text" placeholder="{{trans('trans.name')}}" class="form-control"    name="name"  required="" value="{{$clientsnots->name}}" /> 
           </div>
 
  
-            <div class="row">
+        
                          <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.color')}}</label>
               <input type="color" placeholder="{{trans('trans.color')}}" class="form-control"    name="color"  required="" value="{{$clientsnots->color}}" /> 
           </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.type')}}</label>
 
 <select name="status" class="form-control" required="">
@@ -81,8 +82,10 @@
                 </select>
           </div>
            
+       </div>
+           
 
-            </div>
+        
                  
 
           <div class="form-group">

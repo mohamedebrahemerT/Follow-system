@@ -73,7 +73,7 @@
 
                  
     @if(admin()->user()->type == 'superadmin' or admin()->user()->type == 'client')
-             @if(admin()->user()->id !== 1 )
+            
            
               <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.role')}}</label>
@@ -94,7 +94,7 @@
                     
                 </select>
           </div>
-                @endif
+                
           @endif
              <div class="form-group col-md-4">
                                <label class="control-label">{{trans('trans.photo')}}</label>

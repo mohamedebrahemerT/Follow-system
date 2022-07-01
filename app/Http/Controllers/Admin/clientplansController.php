@@ -73,7 +73,7 @@ class clientplansController extends Controller
     {
         
 
-       // return request();
+     // return request();
 
          $data = $this->validate(\request(),
             [
@@ -88,12 +88,11 @@ class clientplansController extends Controller
           $data['addby_id']=admin()->user()->id;
        $clientplans=clientplans::create($data);
   
-               if ($request->SocialMediaPlatforms_id) {
-                   foreach ($request->SocialMediaPlatforms_id as $key => $value) 
+               if ($request->ContentType_id) {
+                   foreach ($request->ContentType_id as $key => $value) 
                    {
                        
           clientspostscount::create([
-         'SocialMediaPlatforms_id'=>$value,
          'ContentType_id'=>$request->ContentType_id[$key],
           'count'=>$request->count[$key],
          'plan_id'=>$clientplans->id,
@@ -132,7 +131,16 @@ class clientplansController extends Controller
     public function edit($id)
     {
         //
+
        $clientplans=clientplans::where('id',$id)->first();
+
+   
+         if ( !$clientplans) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/dashboard');
+           }
 
      return view('admin.clientplans.edit',compact('clientplans'));
 
@@ -147,6 +155,9 @@ class clientplansController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+       //return request();
+
        $data = $this->validate(\request(),
             [
                 'name' => 'required',
@@ -160,15 +171,15 @@ class clientplansController extends Controller
          $clientplans=clientplans::where('id',$request->id)->update($data);
            $clientplans=clientplans::where('id',$request->id)->first();
 
-            if ($request->SocialMediaPlatforms_id) {
+            if ($request->ContentType_id) {
                 $clientspostscount=clientspostscount::
                 where('plan_id',$clientplans->id);
                 $clientspostscount->delete();
-                   foreach ($request->SocialMediaPlatforms_id as $key => $value) 
+                   foreach ($request->ContentType_id as $key => $value) 
                    {
                        
           clientspostscount::create([
-         'SocialMediaPlatforms_id'=>$value,
+         
          'ContentType_id'=>$request->ContentType_id[$key],
           'count'=>$request->count[$key],
          'plan_id'=>$clientplans->id,

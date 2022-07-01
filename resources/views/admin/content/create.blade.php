@@ -51,7 +51,7 @@
                                         <div class="caption font-dark">
                                             <i class="icon-settings font-dark"></i>
                                             <span class="caption-subject bold uppercase"> 
-                                               {{$clientplan->client->name}} - {{$clientplan->name}}  -   {{trans('trans.create')}} -{{trans('trans.content')}}
+                                               {{$clientplan->client->name}} / {{$clientplan->name}} /   {{trans('trans.create')}}  / {{trans('trans.content')}}
 
                                             </span>
                                         </div>

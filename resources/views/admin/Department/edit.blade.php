@@ -10,7 +10,7 @@ $(document).ready(function(){
 
   $('#jstree').jstree({
     "core" : {
-      'data' : {!! load_dep2($Department->parent,$Department->id) !!},
+      'data' : {!! load_dep($Department->parent,$Department->id) !!},
       "themes" : {
         "variant" : "large"
       }

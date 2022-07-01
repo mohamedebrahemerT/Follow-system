@@ -50,6 +50,7 @@ class AdminController extends Controller
            $admins=admin::
         where('id','!=','1')->
         where('type','=','superadmin')->
+        Orwhere('type','=','CompanyManger')->
         where('addby',admin()->user()->id)
         ->orderBy('id','desc') 
         ->get();
@@ -75,14 +76,13 @@ class AdminController extends Controller
         //
          if (admin()->user()->type == 'superadmin') 
         {
-           $AdminGroups= AdminGroup::get();
+            $AdminGroups= AdminGroup::whereNotIn('id',[1,2,3,4,6,7])->get();
           
         }
         else
         {
            $AdminGroups= AdminGroup::whereIn('id',[6,7])->get();
-
-          
+ 
           
         }
      return view('admin.admins.create',compact('AdminGroups'));
@@ -115,10 +115,27 @@ class AdminController extends Controller
     $data['password']=Hash::make($request->password);
     $data['addby']=admin()->user()->id;
 
-       if (admin()->user()->type !== 'superadmin') {
+       if (admin()->user()->type == 'client') 
+       {
     $data['type']='Emp';
            
        }
+        elseif (admin()->user()->type == 'superadmin') 
+        {
+            if ($request->group_id == 8) 
+            {
+           $data['type']='CompanyManger';
+               
+            }
+            else
+            {
+           $data['group_id']=$request->group_id;
+
+            }
+
+        }
+        
+       
 
            if ($request->image) 
                {
@@ -156,7 +173,26 @@ class AdminController extends Controller
         //
        $admin=admin::where('id',$id)->first();
 
-     return view('admin.admins.edit',compact('admin'));
+        if ( !$admin) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/admins');
+           }
+
+            if (admin()->user()->type == 'superadmin') 
+        {
+            $AdminGroups= AdminGroup::whereNotIn('id',[1,2,3,4,6,7])->get();
+          
+        }
+        else
+        {
+           $AdminGroups= AdminGroup::whereIn('id',[6,7])->get();
+ 
+          
+        }
+
+     return view('admin.admins.edit',compact('admin','AdminGroups'));
 
     }
 
@@ -304,7 +340,10 @@ class AdminController extends Controller
         elseif(admin()->user()->type == 'client')
         {
              
-            $content=content::where('client_id',admin()->user()->id )->orderBy('id','desc')->get(); 
+            $content=content::
+            where('client_id',admin()->user()->id )->
+              where('ContentMangerConfirm','1')
+            ->orderBy('id','desc')->get(); 
                $clients=admin::where('id',admin()->user()->id)->orderBy('id','desc')->get();
 
         }
@@ -335,9 +374,16 @@ class AdminController extends Controller
            elseif(admin()->user()->type == 'Emp')
         {
                $client_id= admin()->user()->addby;
-             $content=content::where('client_id',$client_id )->orderBy('id','desc')->get(); 
+             $content=content::where('ContentMangerConfirm','1')->where('client_id',$client_id )->orderBy('id','desc')->get(); 
               $clients=admin::where('id',$client_id)->orderBy('id','desc')->get();
         }
+         elseif(admin()->user()->type == 'CompanyManger')
+         {
+              $content=content::
+              where('ContentMangerConfirm','0')
+              ->orderBy('id','desc')->get(); 
+               $clients=admin::where('type','client')->orderBy('id','desc')->get();
+         }
         
  
                 

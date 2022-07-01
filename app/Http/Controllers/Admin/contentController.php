@@ -68,7 +68,7 @@ class contentController extends Controller
         elseif(admin()->user()->type == 'client')
         {
              
-            $content=content::where('client_id',admin()->user()->id )->
+ $content=content::where('ContentMangerConfirm','1')->where('client_id',admin()->user()->id )->
              orderBy('id','desc')->get(); 
 
         }
@@ -94,18 +94,81 @@ class contentController extends Controller
               elseif(admin()->user()->type == 'Emp')
         {
                $client_id= admin()->user()->addby;
-             $content=content::where('client_id',$client_id )->
+             $content=content::where('ContentMangerConfirm','1')->where('client_id',$client_id )->
              orderBy('id','desc')->get(); 
               
         }
+        elseif(admin()->user()->type == 'CompanyManger')
+         {
+              $content=content::
+              where('ContentMangerConfirm','0')
+              ->orderBy('id','desc')->get(); 
+               
+         }
      return view('admin.content.getcontent',compact('content'));
 
     }
     public function index($clientplan_id)
     {
          $clientplan=clientplans::where('id',$clientplan_id)->first();
-        $content=content::where('client_id', $clientplan->client_id)->
-             orderBy('id','desc')->get();
+
+             
+
+             if (admin()->user()->type == 'superadmin') 
+        {
+      $content=content::where('client_id',$clientplan->client_id)->orderBy('id','desc')->get(); 
+        }
+        elseif(admin()->user()->type == 'AccountManager')
+        {
+           
+             $content=content::
+          where('client_id',$clientplan->client_id)->
+             orderBy('id','desc')
+             ->get(); 
+
+        }
+
+        elseif(admin()->user()->type == 'client')
+        {
+             
+            $content=content::
+            where('ContentMangerConfirm','1')->
+            where('client_id',admin()->user()->id )->
+             orderBy('id','desc')->get(); 
+
+        }
+         elseif(admin()->user()->type == 'GraphicDesign')
+        {
+            
+                 
+           $clientsnots = clientsnots::where('status','1')->first();
+             $content=content::
+             where('clientsnot_id',$clientsnots->id )->
+           where('client_id',$clientplan->client_id)
+             ->
+             orderBy('id','desc')
+             ->get(); 
+
+        }
+
+              elseif(admin()->user()->type == 'Emp')
+        {
+               $client_id= admin()->user()->addby;
+             $content=content::
+             where('client_id',$clientplan->client_id)->
+             where('ContentMangerConfirm','1' )->
+             orderBy('id','desc')->get(); 
+              
+        }
+         elseif(admin()->user()->type == 'CompanyManger')
+         {
+              $content=content::
+              where('ContentMangerConfirm','0')
+              ->orderBy('id','desc')->get(); 
+               
+         }
+
+
      return view('admin.content.index',compact('content','clientplan_id','clientplan'));
 
     }
@@ -163,41 +226,67 @@ class contentController extends Controller
     public function show($id)
     {
         //
-            $content=content::where('id',$id)->first();
+            
            
 
             if (admin()->user()->type == 'superadmin') 
         {
-             $comments=$content->comment;
+            $content=content::where('id',$id)->first();
+              
+              
         }
         elseif(admin()->user()->type == 'AccountManager')
         {
-             
-             $comments=$content->AccountManagercomment;
-           
-
+              $content=content::where('id',$id)->first();
         }
 
         elseif(admin()->user()->type == 'client')
         {
-             $comments=$content->comment;
+              $content=content::
+              where('ContentMangerConfirm','1')->
+              where('id',$id)
+              ->first();
+             
             
-
         }
          elseif(admin()->user()->type == 'GraphicDesign')
         {
+              $content=content::
+              where('ContentMangerConfirm','1')->
+              where('id',$id)
+              ->first();
              $comments=$content->comment;
-            
+          
 
         }
 
               elseif(admin()->user()->type == 'Emp')
         {
                
-             $comments=$content->comment;
+            
+              $content=content::
+              where('ContentMangerConfirm','1')->
+              where('id',$id)
+              ->first();
+             
               
         }
 
+       if ( !$content) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
+
+               return redirect('/getcontent');
+           }
+
+             if(admin()->user()->type == 'AccountManager')
+        {
+       $comments=$content->AccountManagercomment;
+        }
+        else
+        {
+            $comments=$content->comment;  
+        }
 
 
      return view('admin.content.show',compact('content','comments'));
@@ -214,7 +303,12 @@ class contentController extends Controller
         //
         $content=content::where('id',$id)->first();
         
+    if ( !$content) 
+         {
+                          session()->flash('danger', trans('trans.productnotfound'));
 
+               return redirect('/getcontent');
+           }
      return view('admin.content.edit',compact('content'));
 
     }

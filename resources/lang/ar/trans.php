@@ -301,7 +301,11 @@ return [
     'not'=>'الملاحظه   ',
     'Customer Comments and Amendments Table'=>' جدول   تعديلات وتعليقات   الفريق  ',
     'addby'=>'اضيف بواسطة ',
-    'AccountManagercomment Comments and Amendments Table'=>'جدول تعديلات وتعليقات مدير الحساب '
+    'AccountManagercomment Comments and Amendments Table'=>'جدول تعديلات وتعليقات مدير الحساب ' ,
+    'productnotfound'=>' رابط غير صالح ',
+    'Add New plan'=>'اضافة خطة جديدة ',
+    'Add New client'=>'اضافة عميل جديد ',
+    'Add New content'=>'اضافة محتوي جديد في  هذه الخطة '
 
 
         
