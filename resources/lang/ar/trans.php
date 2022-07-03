@@ -305,7 +305,17 @@ return [
     'productnotfound'=>' رابط غير صالح ',
     'Add New plan'=>'اضافة خطة جديدة ',
     'Add New client'=>'اضافة عميل جديد ',
-    'Add New content'=>'اضافة محتوي جديد في  هذه الخطة '
+    'Add New content'=>'اضافة محتوي جديد في  هذه الخطة ',
+    'Approval of the company manager'=>'اعتماد مدير الشركة ',
+    'ContentMangerConfirmdone'=>'تم  اعتماد المحتوي  وتم ارسالة الي العمل ',
+  'ContentMangerConfirmnotdone'=>'تم رفض المحتوي وتم رجوعة الي مدير الحساب ',
+  'send'=>'ارسال ',
+  'uploaddesign'=>'قم برفع التصميم ',
+  'Close'=>'قفل' ,
+  'Approval design'=>'اعتماد   التصميم',
+  'acountmangerDesignConfirmdone'=>'تم اعتماد التصميم ',
+'acountmangerDesignConfirmnotdone'=>'تم رفض التصميم ',
+'time'=>'وقت النشر'
 
 
         

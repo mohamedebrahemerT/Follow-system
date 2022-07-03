@@ -57,11 +57,15 @@
                         <a href="{{url('/')}}/clients" class="nav-link ">
                             <i class="icon-diamond"></i>
                             <span class="title"> 
-                                  @if(admin()->user()->type == 'AccountManager')
+             @if(admin()->user()->type == 'AccountManager'  )
                             {{trans('trans.myclients')}}
 
-                              @elseif(admin()->user()->type == 'client')
+                     @elseif(admin()->user()->type == 'client')
                             {{trans('trans.myinfo')}}
+
+             @elseif(admin()->user()->type == 'Emp')
+
+                            {{ admin()->user()->empadmin->name}}
 
                             @else
                             {{trans('trans.clients')}}

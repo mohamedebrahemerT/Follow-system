@@ -68,8 +68,14 @@ Route::get('content/index/{clientplan_id}', 'contentController@index');
 Route::get('content/create/{clientplan_id}', 'contentController@create');
 Route::get('getcontent', 'contentController@getcontent');
 Route::post('comment', 'contentController@comment');
-
 Route::get('comment_delete/{id}', 'contentController@comment_delete');
+
+Route::post('/ContentMangerConfirm','contentController@ContentMangerConfirm')->name('content.ContentMangerConfirm');
+
+Route::post('/acountmangerDesignConfirm','contentController@acountmangerDesignConfirm')->name('content.acountmangerDesignConfirm');
+
+Route::post('uploaddesign', 'contentController@uploaddesign');
+
 
 
  Route::resource('Departments', 'DepartmentController');

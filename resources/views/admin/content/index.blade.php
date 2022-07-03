@@ -113,7 +113,7 @@
                                             </thead>
                                             <tbody>
 
-                                            	@foreach($content as $admin)
+                                            	@foreach($content as $content)
                                                 <tr class="odd gradeX">
                                                     <td>
                                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -122,31 +122,25 @@
                                                         </label>
                                                     </td>
         <td> 
-                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
-                                                        {!! $admin->name !!}
+                                               <a href="{{url('/')}}/content/{{$content->id}}"> 
+                                                        {!! $content->name !!}
                                                         </a>
                                                          </td>
                                                  
                                                     <td> 
-                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
-                                                        {!! $admin->content !!}
+                                               <a href="{{url('/')}}/content/{{$content->id}}"> 
+                                                        {!! $content->content !!}
                                                         </a>
                                                          </td>
-                                                    <td> {{$admin->client->name}} </td>
+                                                    <td> {{$content->client->name}} </td>
                                                     <td>
-                                                        @if($admin->departmet_id)
-                                                     {{$admin->Department->name}} 
+                                                        @if($content->departmet_id)
+                                                     {{$content->Department->name}} 
                                                      @endif
                                                  </td >
-                                                    <td> {{$admin->ContentType->name}} </td>
-                                                    <td> {{$admin->plan->name}} </td>
-                                                    <td> 
- @if($admin->image)
-                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:50px;height: 50px;">
-                                                @else
-                                            لا يوجد 
-                                                @endif
-                                                     </td>
+                                                    <td> {{$content->ContentType->name}} </td>
+                                                    <td> {{$content->plan->name}} </td>
+                                      @include('admin.content.checkDesinStatus')
                                                     
                                 
                                         @if(admin()->user()->type  =='superadmin'  or admin()->user()->type  =='AccountManager')
@@ -158,16 +152,16 @@
                                                             </button>
                                                             <ul class="dropdown-menu pull-left" role="menu">
                                                                 <li>
-                         <a href="{{url('/')}}/content/{{$admin->id}}">
+                         <a href="{{url('/')}}/content/{{$content->id}}">
                                      <i class="icon-docs"></i>{{trans('trans.show')}} </a>
                                                                 </li>
                                                                 <li>
-                                                 <a href="{{url('/')}}/content/{{$admin->id}}/edit">
+                                                 <a href="{{url('/')}}/content/{{$content->id}}/edit">
                                      <i class="icon-docs"></i>{{trans('trans.edit')}} </a>
                                                                 </li>
 
                                                                  <li>
-                                                 <a href="{{url('/')}}/content/{{$admin->id}}/destroy ">
+                                                 <a href="{{url('/')}}/content/{{$content->id}}/destroy ">
                                      <i class="icon-docs"></i>{{trans('trans.delete')}} </a>
                                                                 </li>
                                                                 

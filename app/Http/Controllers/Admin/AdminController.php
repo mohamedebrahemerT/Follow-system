@@ -265,11 +265,13 @@ class AdminController extends Controller
         {
           if (Auth::guard('admin')->check())
            { 
-                
 
-             return view('admin.dashboard');
+            $data=  $this->contentAndclients();
+                $content=  $data['content'];
+                $clients= $data['clients'];
+             return view('admin.dashboard',compact('content','clients'));
               
-          }
+            }
             
              $lang = 'ar';
         if(Session::has('lang')) {
@@ -303,8 +305,19 @@ class AdminController extends Controller
 
         public function dashboard()
     {
+ 
+               $data=  $this->contentAndclients();
+                $content=  $data['content'];
+                $clients= $data['clients'];
 
+             return view('admin.dashboard',compact('content','clients'));
+       
+    }
 
+    public function contentAndclients($value='')
+    {
+       
+ 
         if (admin()->user()->type == 'superadmin') 
         {
            $content=content::orderBy('id','desc')->get(); 
@@ -384,12 +397,15 @@ class AdminController extends Controller
               ->orderBy('id','desc')->get(); 
                $clients=admin::where('type','client')->orderBy('id','desc')->get();
          }
-        
- 
-                
 
-             return view('admin.dashboard',compact('content','clients'));
-       
+           $data=[];
+         $data= [
+            'content'=>$content,
+            'clients'=>$clients
+        ];
+         return $data;
+
+        
     }
 
     public function Admin_logout_fun()

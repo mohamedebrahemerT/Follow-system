@@ -70,18 +70,29 @@
                    
                  <th> {{trans('trans.clientsnot')}}  </th>
                
+                                        @if(admin()->user()->type =='CompanyManger')
+                 <th> {{trans('trans.Approval of the company manager')}}  </th>
+
+                                                    @endif
+
+                                 @if(admin()->user()->type =='AccountManager')
+     
+                 <th> {{trans('trans.Approval design')}}  </th>
+                                                    @endif
+                                                  
+                                     
 
 
-
-                                        @if(admin()->user()->type !=='client')
+                                        @if(admin()->user()->type =='superadmin' or admin()->user()->type =='AccountManager')
                                                    
                                                     <th>{{trans('trans.Actions')}}  </th>
                                                     @endif
+
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                            	@foreach($content as $admin)
+                                            	@foreach($content as $content)
                                                 <tr class="odd gradeX">
                                                     <td>
                                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -91,61 +102,81 @@
                                                     </td>
       
                                                   <td> 
-                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
+                                               <a href="{{url('/')}}/content/{{$content->id}}"> 
 
-                                                        {!! $admin->name !!} 
+                                                        {!! $content->name !!} 
                                                     </a>
                                                     </td>
                                                     <td> 
-                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
+                                               <a href="{{url('/')}}/content/{{$content->id}}"> 
 
-                                                        {!! $admin->content !!} 
+                                                        {!! $content->content !!} 
                                                     </a>
                                                     </td>
                                         @if(admin()->user()->type !=='client')
 
                                                     <td> 
-                                    @if($admin->client_id)
+                                    @if($content->client_id)
 
-                                                        {{$admin->client->name}} 
+                                                        {{$content->client->name}} 
                                     @endif
 
                                                     </td>
                                                     @endif
                                    <td> 
-                                    @if($admin->departmet_id)
-                                    {{$admin->Department->name}} 
+                                    @if($content->departmet_id)
+                                    {{$content->Department->name}} 
                                     @endif
                                 </td >
                                                     <td>
-                                                        @if($admin->ContentType_id)
-                                                     {{$admin->ContentType->name}} 
+                                                        @if($content->ContentType_id)
+                                                     {{$content->ContentType->name}} 
                                                      @endif
                                                  </td>
                                                     <td> 
-                                                        @if($admin->plan_id)
-                                                        {{$admin->plan->name}} 
+                                                        @if($content->plan_id)
+                                                        {{$content->plan->name}} 
                                                         @endif
                                                     </td>
-                                                    <td> 
- @if($admin->image)
- <img src="@if(file_exists($admin->image))
- {{url('/')}}/{{$admin->image}}
- @else
- {{url('/')}}/images/default.jpg
-@endif
-  " style="width:50px;height: 50px;">
-     @else
-  لا يوجد 
-    @endif
-                                                     </td>
+                                                     @include('admin.content.checkDesinStatus')
                                                      <td>
-                 @if($admin->clientsnot_id)
-                  {{$admin->clientsnots->name}} 
+                 @if($content->clientsnot_id)
+                  {{$content->clientsnots->name}} 
                @endif
                                                      </td>
+
+                                        @if(admin()->user()->type =='CompanyManger')
+
+                                                     <td>
+                                       <div class="switch">
+                                            <label>
+                                                <input onchange="update_active(this)" value="{{ $content->id }}"
+                                                       type="checkbox" <?php if ($content->ContentMangerConfirm == '1') echo "checked";?> >
+                                                <span class="lever switch-col-indigo"></span>
+                                            </label>
+                                        </div>
+                                                     </td>
+                                       @endif
+
+                                      
+
+                                                     <td>
+                                                         @if(admin()->user()->type =='AccountManager')
+     @if($content->ContentMangerConfirm == '1' and $content->Contentclientconfirm == '1')
+                                       <div class="switch">
+                                            <label>
+                                 <input onchange="update_acountmangerDesignConfirm(this)" value="{{ $content->id }}"
+                                                       type="checkbox" <?php if ($content->acountmangerDesignConfirm == '1') echo "checked";?> >
+                                                <span class="lever switch-col-indigo"></span>
+                                            </label>
+                                        </div>
+                                          @endif
+                                       @endif
+                                                     </td>
+                                     
+
                                                     
-                                        @if(admin()->user()->type !=='client')
+                        @if(admin()->user()->type =='superadmin' or admin()->user()->type =='AccountManager')
                                                   
                                                     <td>
                                                         <div class="btn-group">
@@ -154,12 +185,12 @@
                                                             </button>
                                                             <ul class="dropdown-menu pull-left" role="menu">
                                                                 <li>
-                                                 <a href="{{url('/')}}/content/{{$admin->id}}/edit">
+                                                 <a href="{{url('/')}}/content/{{$content->id}}/edit">
                                      <i class="icon-docs"></i>{{trans('trans.edit')}} </a>
                                                                 </li>
 
                                                                  <li>
-                                                 <a href="{{url('/')}}/content/{{$admin->id}}/destroy ">
+                                                 <a href="{{url('/')}}/content/{{$content->id}}/destroy ">
                                      <i class="icon-docs"></i>{{trans('trans.delete')}} </a>
                                                                 </li>
                                                                 
@@ -183,9 +214,57 @@
                         
                     </div>
                     <!-- END CONTENT BODY -->
-                @push('js')
-               
-                @endpush
+               @push('js')
+
+            <script type="text/javascript">
+                function update_active(el) {
+                    if (el.checked) {
+                        var ContentMangerConfirm = 1;
+                    } else {
+                        var ContentMangerConfirm = 0;
+                    }
+                    $.post('{{ route('content.ContentMangerConfirm') }}', {
+                        _token: '{{ csrf_token() }}',
+                        id: el.value,
+                        ContentMangerConfirm: ContentMangerConfirm
+                    }, function (data) {
+                        if (data == 1) 
+                        {
+                            toastr.success("{{trans('trans.ContentMangerConfirmdone')}}");
+                        } else 
+                        {
+                            toastr.error("{{trans('trans.ContentMangerConfirmnotdone')}}");
+                        }
+                    });
+                }
+            </script>
+
+            <script type="text/javascript">
+                function update_acountmangerDesignConfirm(el) {
+                    if (el.checked) {
+                        var acountmangerDesignConfirm = 1;
+                    } else {
+                        var acountmangerDesignConfirm = 0;
+                    }
+                    $.post('{{ route('content.acountmangerDesignConfirm') }}', {
+                        _token: '{{ csrf_token() }}',
+                        id: el.value,
+                        acountmangerDesignConfirm: acountmangerDesignConfirm
+                    }, function (data) {
+                        if (data == 1) 
+                        {
+                            toastr.success("{{trans('trans.acountmangerDesignConfirmdone')}}");
+                        } else 
+                        {
+                            toastr.error("{{trans('trans.acountmangerDesignConfirmnotdone')}}");
+                        }
+                    });
+                }
+            </script>
+
+            
+
+        @endpush
 
   @endsection
 

@@ -156,7 +156,9 @@
               
                @if($content->clientsnot_id)
        
-          @if($content->clientsnots->status == '1')
+          @if($content->clientsnots->status == '1' and  $content->ContentMangerConfirm =='1' 
+                     and $content->Contentclientconfirm =='1' 
+                     and $content->acountmangerDesignConfirm =='1' and $content->clientDesignConfirm =='1')
 
           <div class="form-group col-md-3">
                                <label class="control-label">{{trans('trans.design')}}</label>
@@ -165,12 +167,21 @@
                
           </div>
 
+            <div class="form-group col-md-3">
+                <label class="control-label">{{trans('trans.time')}}</label>
+  <input type="time" placeholder="{{trans('trans.time')}}" class="form-control"    
+  name="time"   value="{{$content->time }}" 
+   />   
+          </div>
+
               <div class="form-group col-md-3">
                 <label class="control-label">{{trans('trans.dateofpublish')}}</label>
   <input type="date" placeholder="{{trans('trans.dateofpublish')}}" class="form-control"    
   name="date"   value="{{$content->date }}" 
    />   
           </div>
+
+          
           @endif
           @endif
 

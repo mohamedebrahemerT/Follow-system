@@ -255,21 +255,25 @@ class contentController extends Controller
               where('ContentMangerConfirm','1')->
               where('id',$id)
               ->first();
-             $comments=$content->comment;
+             
           
 
         }
 
-              elseif(admin()->user()->type == 'Emp')
-        {
-               
-            
+              elseif(admin()->user()->type == 'CompanyManger')
+          {
               $content=content::
-              where('ContentMangerConfirm','1')->
+              where('ContentMangerConfirm','0')->
               where('id',$id)
               ->first();
-             
-              
+          }
+
+            if (admin()->user()->type == 'Emp') 
+        {
+           $content=content::
+              where('ContentMangerConfirm','1')->
+              where('id',$id)
+              ->first();   
         }
 
        if ( !$content) 
@@ -333,6 +337,7 @@ class contentController extends Controller
                 'ContentType_id' => 'required',
                 'content' => 'required',
                 'date' => 'sometimes|nullable',
+                'time' => 'sometimes|nullable',
 
                  
                  
@@ -346,13 +351,7 @@ class contentController extends Controller
                {
 
                 if ($content->image) 
-         {
-            if (file_exists($content->image)) 
-            {
-                   unlink($content->image);
-            }    
-                     
-         }
+        
 
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('/images/content'), $imageName);
@@ -384,7 +383,7 @@ class contentController extends Controller
         public function comment(Request $request)
         {
               
-            // return request();
+           //  return request();
             $data = $this->validate(\request(),
             [
                 'clientsnot_id' => 'sometimes|nullable',
@@ -396,7 +395,8 @@ class contentController extends Controller
                  
             ]);
 
-            if ($request->typeofsend == 'ارسل الي مدير الحساب') {
+            if ($request->typeofsend == 'ارسل الي مدير الحساب'  or $request->typeofsend =='ارسال') {
+ 
                $data['typeofsend']='AccountManager';
             }
             else
@@ -406,12 +406,45 @@ class contentController extends Controller
             }
             
 
+       $data['comment']=$request->Moreexplanation;
        $data['addby_id']=admin()->user()->id;
       // return $data;
          
+        if(admin()->user()->type == 'client' or admin()->user()->type == 'Emp')
+         {
        $content=content::where('id',$request->content_id)->first();
       $content->clientsnot_id=$request->clientsnot_id;
        $content->save();
+
+      $clientsnot= clientsnots::where('id',$request->clientsnot_id)->first();
+
+            if ($clientsnot) 
+            {
+
+                   if ($clientsnot->status == '1'  
+                    and $content->ContentMangerConfirm =='1' 
+                     and $content->Contentclientconfirm =='1' 
+                     and $content->acountmangerDesignConfirm =='0' ) 
+                   {
+                   
+                   $content->Contentclientconfirm='1';
+                   $content->save();
+                   }
+                  elseif($clientsnot->status == '1' 
+                    and $content->ContentMangerConfirm =='1' 
+                     and $content->Contentclientconfirm =='1' 
+                     and $content->acountmangerDesignConfirm =='1' )
+                   {
+                      
+                     $content->clientDesignConfirm='1';
+                    $content->save();
+
+                   }
+            }
+         }
+
+
+     
             
         $comment=comment::create($data);
 
@@ -428,8 +461,86 @@ class contentController extends Controller
               session()->flash('danger', trans('trans.deleteSuccess'));
         return   back();
     }
- 
 
+     public function ContentMangerConfirm(Request $request)
+{
+
+        if ($request->ContentMangerConfirm == '1') 
+        {
+    $data['ContentMangerConfirm'] ='1';
+           $stat='1';
+        }
+        else
+        {
+    $data['ContentMangerConfirm'] ='0';
+           $stat='0';
+
+        }
+    content::where('id', $request->id)->update($data);
+   
+     return $stat;
+ }
+
+      public function acountmangerDesignConfirm(Request $request)
+{
+
+        if ($request->acountmangerDesignConfirm == '1') 
+        {
+    $data['acountmangerDesignConfirm'] ='1';
+           $stat='1';
+        }
+        else
+        {
+    $data['acountmangerDesignConfirm'] ='0';
+           $stat='0';
+
+        }
+    content::where('id', $request->id)->update($data);
+   
+     return $stat;
+ }
+ 
+  public function uploaddesign(Request $request)
+  {
+
+      //  return request();
+            $data = $this->validate(\request(),
+            [
+                 
+                'content_id' => 'required',
+                'image' => 'required',
+               
+                 
+            ]);
+
+       
+       $data['addby_id']=admin()->user()->id;
+       $data['content_id']=$request->content_id;
+         $content=content::where('id',$request->content_id)->first( );
+
+
+         if ($request->image) 
+               {
+
+                if ($content->image) 
+        
+
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('/images/content'), $imageName);
+            $data['image'] = 'images/content/'.$imageName;
+              }
+
+         $content=content::where('id',$request->content_id)->update([
+            'image'=>$data['image']
+         ]);
+               $data['typeofsend']='Design';
+
+        $comment=comment::create($data);
+
+        session()->flash('success', trans('trans.createSuccess'));
+
+        return back();
+  }
 
 }
 

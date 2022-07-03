@@ -19,6 +19,7 @@ class comment extends Model
 'name',
 'content',
 'typeofsend',
+'image'
          
     ];
 
@@ -33,5 +34,13 @@ class comment extends Model
       public function content() {
         return $this->hasOne(\App\Models\content::class, 'id', 'content_id');
     }
+
+    public function showcontent() {
+        return $this->hasOne(\App\Models\content::class, 'id', 'content_id');
+    }
+
+    public function getCreatedAtAttribute($timestamp) {
+    return \Carbon::parse($timestamp)->format('Y-m-d g:i a');
+}
 
 }

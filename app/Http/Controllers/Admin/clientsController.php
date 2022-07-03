@@ -80,6 +80,12 @@ class clientsController extends Controller
               $clients=admin::where('id',$client_id)->orderBy('id','desc')->get();
         }
 
+        elseif(admin()->user()->type == 'CompanyManger')
+                        {
+        $clients=admin::where('type','client')->orderBy('id','desc')->get();
+
+                        }
+
                             
      return view('admin.clients.index',compact('clients'));
 

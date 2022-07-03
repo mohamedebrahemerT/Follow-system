@@ -48,6 +48,16 @@
     /
                   <h3>{{$content->clientsnots->name}}</h3>
                @endif
+
+               @if($content->clientsnots->status == '1' and  $content->ContentMangerConfirm =='1' 
+                     and $content->Contentclientconfirm =='1' 
+                     and $content->acountmangerDesignConfirm =='1' and $content->clientDesignConfirm =='1')
+                      {{trans('trans.time')}}:{{$content->time }}  /
+               {{trans('trans.date')}}:{{$content->date }} 
+
+               @endif
+              
+
 </h4>
                             </div>
                                
@@ -64,6 +74,27 @@
       <th scope="col">{{trans('trans.departmet_id')}}</th>
       <th scope="col">{{trans('trans.title')}}</th>
       <th scope="col">{{trans('trans.content')}}</th>
+   
+    @if(admin()->user()->type == 'superadmin' or admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' )
+
+                 @if($content->ContentMangerConfirm == '1' and $content->Contentclientconfirm == '1')
+                    <th scope="col">{{trans('trans.design')}}</th>
+                         @endif  
+
+ @elseif(admin()->user()->type == 'client' or admin()->user()->type == 'Emp' )
+
+                      @if($content->ContentMangerConfirm == '1' and $content->Contentclientconfirm == '1' and $content->acountmangerDesignConfirm == '1')               
+                         <th scope="col">{{trans('trans.design')}}</th>
+                             @endif
+
+
+
+@endif  
+     
+
+             
+           
+
     </tr>
   </thead>
   <tbody>
@@ -80,15 +111,41 @@
       <td>
              {!! $content->content !!}
       </td>
+         @include('admin.content.checkDesinStatus')
+
     </tr>
      
   </tbody>
 </table>
+  @if(admin()->user()->type == 'GraphicDesign' )
+ @if($content->ContentMangerConfirm == '1' and $content->Contentclientconfirm == '1')
+    
+             <form role="form" action="{{url('/')}}/uploaddesign" method="POST" enctype="multipart/form-data" >
+                @csrf
+                <input type="hidden" name="content_id" value="{{$content->id}}">
+                <div class="row">
+                      <div class="form-group  col-md-6">
+                               <label class="control-label">{{trans('trans.uploaddesign')}}</label>
+              <input type="file" placeholder="{{trans('trans.photo')}}" class="form-control"    name="image"     /> 
+          </div>
+
+                  <div class="form-group col-md-6">
+                   <label class="control-label">{{trans('trans.save')}}</label>
+                     <input type="submit"  value="{{trans('trans.save')}}" class="form-control">
+           
+          </div>
+                </div>
+
+            </form>
+
+               @endif
+               @endif
+
  
                                         </div>
 
 
-     @if(admin()->user()->type !== 'AccountManager')
+     @if(admin()->user()->type == 'superadmin'  or  admin()->user()->type == 'client' or  admin()->user()->type == 'Emp'  )
                                          <div class="col-md-12 value">
 <h3>{{trans('trans.Customer Comments and Amendments Table')}}</h3>
                                             <table class="table table-hover">
@@ -101,6 +158,7 @@
       <th scope="col">{{trans('trans.addby')}}</th>
     
       <th scope="col">{{trans('trans.not')}}</th>
+      <th scope="col">{{trans('trans.Moreexplanation')}}</th>
       <th scope="col">{{trans('trans.date')}}</th>
     </tr>
   </thead>
@@ -128,6 +186,9 @@
                   
                         @endif
                   
+      </td>
+       <td>
+          {{$allcomm->comment}}
       </td>
 
        <td>
@@ -157,54 +218,52 @@
       <th scope="col">{{trans('trans.addby')}}</th>
  
       <th scope="col">{{trans('trans.not')}}</th>
+      <th scope="col">{{trans('trans.Moreexplanation')}}</th>
+
       <th scope="col">{{trans('trans.date')}}</th>
     </tr>
   </thead>
   <tbody>
           @foreach($content->AccountManagercomment as  $allcomm)
 
-    <tr>
-      <td>
-             {!! $allcomm->name !!}
-      </td>
-      <td>
-             {!! $allcomm->content !!}
-      </td>
-       <td>
-          {{$allcomm->addby->name}}
-      </td>
-       
+@if($allcomm->typeofsend == 'Design')
 
-      <td>
-            @if($allcomm->clientsnot_id)
-                    
-                        {{$allcomm->clientsnot->name}}
-                    
+                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' )
 
-                  
-                        @endif
-                  
-      </td>
+                 @if($allcomm->showcontent->ContentMangerConfirm == '1' and $allcomm->showcontent->Contentclientconfirm == '1')
+         @include('admin.content.AccountManagercomments')
+                         @endif  
 
-       <td>
-              {{ $allcomm->created_at }}
-      </td>
-     
-    </tr>
+ @elseif(admin()->user()->type == 'client' or admin()->user()->type == 'Emp' )
+
+                      @if($allcomm->showcontent->ContentMangerConfirm == '1' and $allcomm->showcontent->Contentclientconfirm == '1' and $allcomm->showcontent->acountmangerDesignConfirm == '1')               
+                          @include('admin.content.AccountManagercomments')
+                             @endif
+
+
+
+@endif 
+                       
+
+                       @else
+                           @include('admin.content.AccountManagercomments')
+                       @endif 
+    
                     @endforeach
      
   </tbody>
 </table>
  
                                         </div>
-                                            @if($content->image)
-                                             <img src="{{url('/')}}/{{$content->image}}"  style="width:400px;height:400px">
-                                              @else
-                                          
-                                                @endif
+                                           
                                     </div>
+@if(admin()->user()->type !== 'GraphicDesign')
+
   @if($content->ContentMangerConfirm == '1')
- <button onclick="myFunction()" id="off">{{trans('trans.addcomment')}}</button>
+ <button  class="@if($content->clientsnots->status == '1' and $content->ContentMangerConfirm =='1' 
+                     and $content->Contentclientconfirm =='1' 
+                     and $content->acountmangerDesignConfirm =='1' and $content->clientDesignConfirm =='1'  ) hidden @endif"  onclick="myFunction()" id="off">{{trans('trans.addcomment')}}</button>
+                                                @endif
                                                 @endif
 
 
@@ -228,6 +287,7 @@
               </textarea>
           </div>
 
+     @if(admin()->user()->type == 'client')
                      <div class="form-group col-md-12">
               <label class="control-label">{{trans('trans.clientsnots')}}</label>
 
@@ -252,8 +312,9 @@
                     
                 </select>
           </div>
+@endif
 
-
+    
 
             <div class="form-group col-md-12">
                  <label class="control-label">{{trans('trans.Moreexplanation')}}</label>
@@ -263,15 +324,17 @@
               </textarea>
               
           </div>
-
+ @if(admin()->user()->type == 'client' or admin()->user()->type == 'Emp')
             <div class="form-group col-md-6">
                   
         <input type="submit" name="typeofsend" value="{{trans('trans.sendtoteam')}} {{$content->client->name}} " class="btn green-meadow"> 
           </div>
+@endif
 
             <div class="form-group col-md-6">
                   
-                    <input type="submit" name="typeofsend" value="{{trans('trans.sendtoacountmanger')}}" class="btn green-meadow">
+                    <input type="submit" name="typeofsend" value="
+                     @if(admin()->user()->type == 'client' or admin()->user()->type == 'Emp'){{trans('trans.sendtoacountmanger')}}@else{{trans('trans.send')}}@endif" class="btn green-meadow">
              
 
               
@@ -297,97 +360,28 @@
 
              
                                                 @foreach($comments as  $com)
+                       @if($com->typeofsend == 'Design')
 
-          <!-- First Comment -->
-          <article class="row">
-            <div class="col-md-2 col-sm-2 hidden-xs">
-              <figure class="thumbnail">
-                <img class="img-responsive" 
-                src="
+                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' )
 
-                        @if($com->addby->image ==null ) 
-http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png
-                                     @else 
-                                     {{url('/')}}/{{ $com->addby->image }}
-                                     @endif
-                " />
-                <figcaption class="text-center">{{$com->addby->name}}</figcaption>
-              </figure>
+                 @if($com->showcontent->ContentMangerConfirm == '1' and $com->showcontent->Contentclientconfirm == '1')
+         @include('admin.content.Comments')
+                         @endif  
 
-            </div>
-            <div class="col-md-10 col-sm-10">
+ @elseif(admin()->user()->type == 'client' or admin()->user()->type == 'Emp' )
 
-              <div class="panel panel-default arrow left">
-                <div class="panel-body">
-                      <header class="text-right">
-                        @if($com->addby->id == admin()->user()->id)
-                        <a href="{{url('/')}}/comment_delete/{{$com->id}}">
-                             <i class="fa fa-trash" style="color:red;font-size: 20px;"></i>
-                        </a>
-                        @endif
-                  </header>
-
-                  <header class="text-left">
-                    <div class="comment-user"><i class="fa fa-user"></i> {{$com->addby->name}}</div>
-                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{$com->created_at}}</time>
-
-                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> 
-                    {{trans('trans.typeofsend')}}:
-                   @if($com->typeofsend == 'client')
-                    {{trans('trans.toteam')}}
-                    @else
-                    {{trans('trans.toacountmager')}}
-
-                   @endif
-                </a></p>
-                  </header>
-
-                  <div class="comment-post">
-                    @if($com->clientsnot_id)
-                    
-                           {{trans('trans.not')}}: {{$com->clientsnot->name}}
-                    
-
-                  
-                        @endif
-                  {{$com->comment}}
-              
-                    </p>
-
-                   
-                  </div>
-                
+                      @if($com->showcontent->ContentMangerConfirm == '1' and $com->showcontent->Contentclientconfirm == '1' and $com->showcontent->acountmangerDesignConfirm == '1')               
+                          @include('admin.content.Comments')
+                             @endif
 
 
-                     <table class="table table-hover">
-  <thead>
-    <tr>
-    
-   
-      <th scope="col">{{trans('trans.title')}}</th>
-      <th scope="col">{{trans('trans.content')}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-  
-      
-      <td>
-             {!! $com->name !!}
-      </td>
-      <td>
-             {!! $com->content !!}
-      </td>
-    </tr>
-     
-  </tbody>
-</table>
 
+@endif 
+                       
 
-                </div>
-              </div>
-            </div>
-          </article>
+                       @else
+                           @include('admin.content.Comments')
+                       @endif   
           @endforeach
  
             

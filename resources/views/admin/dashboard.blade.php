@@ -528,7 +528,7 @@
                                             </thead>
                                             <tbody>
 
-                                                @foreach($content as $admin)
+                                                @foreach($content as $content)
                                                 <tr class="odd gradeX">
                                                     <td>
                                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -539,33 +539,29 @@
       
                                                  
                                                     <td> 
-                                               <a href="{{url('/')}}/content/{{$admin->id}}"> 
+                                               <a href="{{url('/')}}/content/{{$content->id}}"> 
 
-                                                        {!! $admin->content !!} 
+                                                        {!! $content->content !!} 
                                                     </a>
                                                     </td>
                                         @if(admin()->user()->type !=='client')
 
-                                                    <td> {{$admin->client->name}} </td>
+                                                    <td> {{$content->client->name}} </td>
                                                     @endif
                                                    
                                                     <td> 
-                                               @if($admin->departmet_id)
-                                                        {{$admin->Department->name}}
+                                               @if($content->departmet_id)
+                                                        {{$content->Department->name}}
                                                         @endif
                                                          </td >
-                                                    <td> {{$admin->ContentType->name}} </td>
-                                                    <td> {{$admin->plan->name}} </td>
-                                                    <td> 
- @if($admin->image)
-                                                <img src="{{url('/')}}/{{$admin->image}}" style="width:50px;height: 50px;">
-                                                @else
-                                            لا يوجد 
-                                                @endif
-                                                     </td>
+                                                    <td> {{$content->ContentType->name}} </td>
+                                                    <td> {{$content->plan->name}} </td>
+                                                    
+   @include('admin.content.checkDesinStatus')
+                                                   
                                                      <td>
-                 @if($admin->clientsnot_id)
-                  {{$admin->clientsnots->name}} 
+                 @if($content->clientsnot_id)
+                  {{$content->clientsnots->name}} 
                @endif
                                                      </td>
                                          

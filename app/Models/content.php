@@ -27,6 +27,7 @@ class content extends Model
 'Contentclientconfirm',
 'acountmangerDesignConfirm',
 'clientDesignConfirm',
+'time'
 
   
          
@@ -69,6 +70,6 @@ class content extends Model
 
      public function AccountManagercomment()
     {
-        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','AccountManager')->orderBy('id','desc');
+        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','AccountManager')->Orwhere('typeofsend','Design')->orderBy('id','desc');
     }
 }
