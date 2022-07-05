@@ -101,8 +101,7 @@ class contentController extends Controller
         elseif(admin()->user()->type == 'CompanyManger')
          {
               $content=content::
-              where('ContentMangerConfirm','0')
-              ->orderBy('id','desc')->get(); 
+              orderBy('id','desc')->get(); 
                
          }
      return view('admin.content.getcontent',compact('content'));
@@ -263,7 +262,6 @@ class contentController extends Controller
               elseif(admin()->user()->type == 'CompanyManger')
           {
               $content=content::
-              where('ContentMangerConfirm','0')->
               where('id',$id)
               ->first();
           }
@@ -287,6 +285,8 @@ class contentController extends Controller
         {
        $comments=$content->AccountManagercomment;
         }
+
+
         else
         {
             $comments=$content->comment;  
@@ -394,16 +394,23 @@ class contentController extends Controller
                 'comment' => 'sometimes|nullable',
                  
             ]);
-
+        
             if ($request->typeofsend == 'ارسل الي مدير الحساب'  or $request->typeofsend =='ارسال') {
  
                $data['typeofsend']='AccountManager';
+            }
+            elseif( $request->typeofsend =='ارسال الي المصمم') 
+            {
+                
+               $data['typeofsend']='sendtoDesiner';
+
             }
             else
             {
                $data['typeofsend']='client';
 
             }
+                 
             
 
        $data['comment']=$request->Moreexplanation;
@@ -423,8 +430,10 @@ class contentController extends Controller
 
                    if ($clientsnot->status == '1'  
                     and $content->ContentMangerConfirm =='1' 
-                     and $content->Contentclientconfirm =='1' 
-                     and $content->acountmangerDesignConfirm =='0' ) 
+                     and $content->Contentclientconfirm =='0' 
+                     and $content->acountmangerDesignConfirm =='0' 
+                     and $content->clientDesignConfirm =='0' 
+                 ) 
                    {
                    
                    $content->Contentclientconfirm='1';
@@ -522,17 +531,16 @@ class contentController extends Controller
          if ($request->image) 
                {
 
-                if ($content->image) 
-        
-
+                
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('/images/content'), $imageName);
             $data['image'] = 'images/content/'.$imageName;
-              }
+          
 
          $content=content::where('id',$request->content_id)->update([
             'image'=>$data['image']
          ]);
+         }
                $data['typeofsend']='Design';
 
         $comment=comment::create($data);

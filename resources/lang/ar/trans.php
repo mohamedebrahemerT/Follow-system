@@ -270,7 +270,7 @@ return [
         'date'=>'التاريخ ',
         'content'=>'المحتوي ',
         'myclients'=>' حسابات العملاء الخاصة بي',
-        'clientsnots'=>'ملاحظات العملاء',
+        'clientsnots'=>' ملاحظات',
         'color'=>'اللون',
         'client_id'=>'العميل ',
         'SocialMediaPlatforms_id'=>'المنصة ',
@@ -315,7 +315,9 @@ return [
   'Approval design'=>'اعتماد   التصميم',
   'acountmangerDesignConfirmdone'=>'تم اعتماد التصميم ',
 'acountmangerDesignConfirmnotdone'=>'تم رفض التصميم ',
-'time'=>'وقت النشر'
+'time'=>'وقت النشر' ,
+'Approval'=>'اعتماد ' ,
+'sendtoDesiner'=>'ارسال الي المصمم'
 
 
         

@@ -49,12 +49,15 @@
                   <h3>{{$content->clientsnots->name}}</h3>
                @endif
 
+   @if($content->clientsnot_id)
+
                @if($content->clientsnots->status == '1' and  $content->ContentMangerConfirm =='1' 
                      and $content->Contentclientconfirm =='1' 
                      and $content->acountmangerDesignConfirm =='1' and $content->clientDesignConfirm =='1')
                       {{trans('trans.time')}}:{{$content->time }}  /
                {{trans('trans.date')}}:{{$content->date }} 
 
+               @endif
                @endif
               
 
@@ -67,7 +70,7 @@
                                         
                                         <div class="col-md-12 value">
 
-                                            <table class="table table-hover">
+                                            <table class="table table-hover  table-striped">
   <thead>
     <tr>
     
@@ -145,10 +148,10 @@
                                         </div>
 
 
-     @if(admin()->user()->type == 'superadmin'  or  admin()->user()->type == 'client' or  admin()->user()->type == 'Emp'  )
+     @if(admin()->user()->type == 'superadmin'  or  admin()->user()->type == 'client' or  admin()->user()->type == 'Emp' or admin()->user()->type == 'CompanyManger' )
                                          <div class="col-md-12 value">
 <h3>{{trans('trans.Customer Comments and Amendments Table')}}</h3>
-                                            <table class="table table-hover">
+                                            <table class="table table-hover  table-striped">
   <thead>
     <tr>
     
@@ -208,7 +211,7 @@
                                 <hr>
                                   <div class="col-md-12 value">
 <h3  class="portlet-title">{{trans('trans.AccountManagercomment Comments and Amendments Table')}}</h3>
-                                            <table class="table table-hover">
+                                            <table class="table table-hover  table-striped">
   <thead>
     <tr>
     
@@ -228,7 +231,7 @@
 
 @if($allcomm->typeofsend == 'Design')
 
-                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' )
+                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager'  or admin()->user()->type == 'CompanyManger')
 
                  @if($allcomm->showcontent->ContentMangerConfirm == '1' and $allcomm->showcontent->Contentclientconfirm == '1')
          @include('admin.content.AccountManagercomments')
@@ -243,7 +246,13 @@
 
 
 @endif 
-                       
+               
+
+                         @elseif($allcomm->typeofsend == 'sendtoDesiner')
+                           @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager'  or admin()->user()->type == 'CompanyManger')
+                           @include('admin.content.AccountManagercomments')
+
+                       @endif 
 
                        @else
                            @include('admin.content.AccountManagercomments')
@@ -257,14 +266,16 @@
                                         </div>
                                            
                                     </div>
-@if(admin()->user()->type !== 'GraphicDesign')
 
-  @if($content->ContentMangerConfirm == '1')
- <button  class="@if($content->clientsnots->status == '1' and $content->ContentMangerConfirm =='1' 
+                                     
+
+@if(admin()->user()->type !== 'GraphicDesign' )
+ <button  class="@if(  $content->ContentMangerConfirm =='1' 
                      and $content->Contentclientconfirm =='1' 
                      and $content->acountmangerDesignConfirm =='1' and $content->clientDesignConfirm =='1'  ) hidden @endif"  onclick="myFunction()" id="off">{{trans('trans.addcomment')}}</button>
                                                 @endif
-                                                @endif
+                                                
+                                               
 
 
 @if(admin()->user()->type !== 'GraphicDesign')
@@ -287,9 +298,15 @@
               </textarea>
           </div>
 
-     @if(admin()->user()->type == 'client')
+     @if(admin()->user()->type == 'client' or admin()->user()->type == 'Emp' )
                      <div class="form-group col-md-12">
-              <label class="control-label">{{trans('trans.clientsnots')}}</label>
+              <label class="control-label">{{trans('trans.clientsnots')}} 
+                @if(admin()->user()->type == 'client' )
+                {{admin()->user()->name}}
+                @else
+                  {{admin()->user()->empadmin->name}}
+                @endif
+            </label>
 
                 <select name="clientsnot_id" class="form-control select2"  >
                        <option></option>
@@ -331,6 +348,8 @@
           </div>
 @endif
 
+
+
             <div class="form-group col-md-6">
                   
                     <input type="submit" name="typeofsend" value="
@@ -339,13 +358,35 @@
 
               
           </div>
-
-
+@if($content->Contentclientconfirm == '1')
+@if(admin()->user()->type == 'AccountManager' or admin()->user()->type == 'CompanyManger')
+            <div class="form-group col-md-6">
+                  
+        <input type="submit" name="typeofsend" value="{{trans('trans.sendtoDesiner')}}" class="btn green-meadow"> 
+          </div>
+@endif
+@endif
   
            
                                                                 
                                                                 
                                                             </form>
+                                                             @if(admin()->user()->type =='CompanyManger')
+
+                                                    
+                                       <div class="switch">
+                                        
+     
+                 {{trans('trans.Approval')}}  {{admin()->user()->name}}
+                                                  
+                                            <label>
+                                                <input onchange="update_active(this)" value="{{ $content->id }}"
+                                                       type="checkbox" <?php if ($content->ContentMangerConfirm == '1') echo "checked";?> >
+                                                <span class="lever switch-col-indigo"></span>
+                                            </label>
+                                        </div>
+                                                     
+                                       @endif
 
                                          
                                     </div>
@@ -362,7 +403,7 @@
                                                 @foreach($comments as  $com)
                        @if($com->typeofsend == 'Design')
 
-                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' )
+                        @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' or admin()->user()->type == 'CompanyManger')
 
                  @if($com->showcontent->ContentMangerConfirm == '1' and $com->showcontent->Contentclientconfirm == '1')
          @include('admin.content.Comments')
@@ -378,6 +419,12 @@
 
 @endif 
                        
+                        @elseif($com->typeofsend == 'sendtoDesiner')
+                          @if(admin()->user()->type == 'superadmin' or  admin()->user()->type == 'GraphicDesign'  or admin()->user()->type == 'AccountManager' or admin()->user()->type == 'CompanyManger')
+                           @include('admin.content.Comments')
+
+                       @endif   
+                          
 
                        @else
                            @include('admin.content.Comments')
@@ -431,6 +478,30 @@
        
    </script>
  
+
+
+  <script type="text/javascript">
+                function update_active(el) {
+                    if (el.checked) {
+                        var ContentMangerConfirm = 1;
+                    } else {
+                        var ContentMangerConfirm = 0;
+                    }
+                    $.post('{{ route('content.ContentMangerConfirm') }}', {
+                        _token: '{{ csrf_token() }}',
+                        id: el.value,
+                        ContentMangerConfirm: ContentMangerConfirm
+                    }, function (data) {
+                        if (data == 1) 
+                        {
+                            toastr.success("{{trans('trans.ContentMangerConfirmdone')}}");
+                        } else 
+                        {
+                            toastr.error("{{trans('trans.ContentMangerConfirmnotdone')}}");
+                        }
+                    });
+                }
+            </script>
                 @endpush
 
   @endsection

@@ -393,8 +393,7 @@ class AdminController extends Controller
          elseif(admin()->user()->type == 'CompanyManger')
          {
               $content=content::
-              where('ContentMangerConfirm','0')
-              ->orderBy('id','desc')->get(); 
+            orderBy('id','desc')->get(); 
                $clients=admin::where('type','client')->orderBy('id','desc')->get();
          }
 

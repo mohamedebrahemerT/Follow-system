@@ -70,6 +70,8 @@ class content extends Model
 
      public function AccountManagercomment()
     {
-        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','AccountManager')->Orwhere('typeofsend','Design')->orderBy('id','desc');
+        return $this->hasMany(\App\Models\comment::class,'content_id')->where('typeofsend','AccountManager')->Orwhere('typeofsend','Design')->Orwhere('typeofsend','sendtoDesiner')->orderBy('id','desc');
     }
+
+
 }

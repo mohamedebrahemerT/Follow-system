@@ -4,10 +4,7 @@
 
 @section('content')
 
-    @push('style')
-    
-
-    @endpsu
+  
 
  
 
