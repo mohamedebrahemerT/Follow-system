@@ -48,7 +48,7 @@
     <!-- END THEME LAYOUT STYLES -->
 
     <!-- Favicon -->
-   <link rel="shortcut icon" href="https://hullol.net/forentend/iconified/iconified/favicon.ico" type="image/x-icon" />
+   <link rel="shortcut icon" href="{{url('/')}}/{{setting()->Fivacon}}" type="image/x-icon" />
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="{{url('/')}}/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css"

@@ -48,7 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT STYLES -->
 
           <!-- Favicon -->
-    <link rel="shortcut icon" href="https://hullol.net/forentend/iconified/iconified/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{url('/')}}/{{setting()->Fivacon}}" type="image/x-icon" />
        
        
     </head>
