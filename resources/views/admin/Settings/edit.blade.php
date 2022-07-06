@@ -95,7 +95,7 @@
 <input type="file" placeholder="{{trans('trans.Fivacon')}}" class="form-control" name="Fivacon" /> 
 
                                <br>
-              <img src="{{url('/')}}/{{$Settings->Fivacon}}"  >
+              <img src="{{url('/')}}/{{$Settings->Fivacon}}"  style="width:200px;height:200px">
           </div>
 
                                   <div class="form-group">
@@ -104,7 +104,7 @@
 <input type="file" placeholder="{{trans('trans.logo')}}" class="form-control" name="logo" /> 
 
                                <br>
-              <img src="{{url('/')}}/{{$Settings->logo}}"  >
+              <img src="{{url('/')}}/{{$Settings->logo}}"  style="width:200px;height:200px">
           </div>
 
            
@@ -185,7 +185,7 @@
 <input type="file" placeholder="{{trans('trans.about_img')}}" class="form-control" name="about_img" /> 
 
                                <br>
-              <img src="{{url('/')}}/{{$Settings->about_img}}"  >
+              <img src="{{url('/')}}/{{$Settings->about_img}}"  style="width:200px;height:200px">
           </div>
 
 
