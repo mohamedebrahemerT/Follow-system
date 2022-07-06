@@ -308,7 +308,7 @@
                 @endif
             </label>
 
-                <select name="clientsnot_id" class="form-control select2"  >
+                <select name="clientsnot_id" class="form-control select2"    >
                        <option></option>
                     @foreach(App\Models\clientsnots::get() as $clientsnot)
 
